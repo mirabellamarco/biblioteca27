@@ -1,0 +1,28 @@
+2024-12-30 17:49:51,946 - DEBUG - Esecuzione query login dall'IP : 127.0.1.1 con parametri: admin@admin.co
+2024-12-30 17:50:05,978 - DEBUG - Esecuzione query login dall'IP : 127.0.1.1 con parametri: admin@admin.com
+2024-12-30 17:50:35,333 - DEBUG - IP: 127.0.1.1 Esecuzione query: 
+            SELECT 
+                c.id AS id_libro,
+                c.nome_libro,
+                c.autore,
+                c.isbn,
+                c.genere,
+                c.editore, 
+                c.anno_pubblicazione,
+                c.posizione,
+                c.disponibile,
+                CASE
+                    WHEN c.disponibile = 1 THEN 'Disponibile'
+                    ELSE 'In prestito'
+                END AS disponibilita
+            FROM 
+                catalogo c
+            WHERE 
+                nome_libro LIKE %s 
+                OR autore LIKE %s 
+                OR genere LIKE %s 
+                OR anno_pubblicazione LIKE %s 
+                OR editore LIKE %s 
+                OR isbn LIKE %s;
+         con parametri : %Gallo%%Gallo%%Gallo%%Gallo%%Gallo%%Gallo%
+2024-12-30 17:50:41,109 - DEBUG - Esecuzione query login dall'IP : 127.0.1.1 con parametri: admin@admin.com

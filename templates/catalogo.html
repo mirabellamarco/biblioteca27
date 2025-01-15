@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Biblioteca</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <style>
+        h1 {
+            color: white;
+            text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+            margin: 70px;
+        }
+
+        body {
+            display: flex;
+            justify-content: baseline;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+        }
+        .container {
+            text-align: center;
+            margin-top: auto;
+        }
+        .btn {
+            margin: 10px;
+        }
+        table td {
+            vertical-align: middle;
+        }
+        .btn-sm {
+            display: block;
+            margin: auto;
+        }
+        .navbar {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+        }
+        .navbar .btn-back {
+            color: white;
+            font-weight: bold;
+            text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+            align-self: flex-start;
+
+        }
+        .navbar .btn-prestiti {
+            color: white;
+            background-color: #cf8e0a;
+            text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+        }       
+        .navbar .btn-libro {
+            background-color: #ffc107eb;
+            border: none;
+            color: white;
+        }
+        .navbar .btn-utenti {
+            background-color: #28a745;
+            border: none;
+            color: white;
+        }
+        .navbar .btn-catalogo {
+            background-color: #007bff;
+            border: none;
+            color: white;
+        }
+
+        .table {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .table thead {
+            background-color: #66a6ff;
+            color: white;
+        }
+        .table .btn {
+            margin: 10px;
+        }
+        .pagination {
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-danger btn-back">
+            <span class="icon">&#8962;</span> Home
+        </a>
+        <a href="{{ url_for('catalogo') }}" class="btn btn-catalogo">Catalogo</a>
+        <a href="{{ url_for('nuovo_utente') }}" class="btn btn-utenti">Utenti</a>
+        <a href="{{ url_for('inserisci_libro') }}" class="btn btn-libro">Inserisci Libro</a>
+        <a href="{{ url_for('gestisci_prestiti') }}" class="btn btn-prestiti">Prestiti</a>
+
+    </div>
+    <div class="container">
+        <h1>Catalogo Libri</h1>
+        <div class="input-group mb-3">
+            <input class="form-control" id="search" type="text" placeholder="Usa questa campo di ricerca per filtrare la tabella per titolo, autore, ISBN, genere, editore, anno, posizione o disponibilità.">
+        </div>
+        <table class="table sortable">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">ID Libro &#8597;</th>
+                    <th onclick="sortTable(1)">Titolo &#8597;</th>
+                    <th onclick="sortTable(2)">Autore &#8597;</th>
+                    <th onclick="sortTable(3)">ISBN &#8597;</th>
+                    <th onclick="sortTable(4)">Genere &#8597;</th>
+                    <th onclick="sortTable(5)">Editore &#8597;</th>
+                    <th onclick="sortTable(6)">Anno &#8597;</th>
+                    <th onclick="sortTable(7)">Posizione &#8597;</th>
+                    <th onclick="sortTable(8)">Disponibilità &#8597;</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody id="bookTable">
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.id_libro }}</td>
+                    <td>{{ book.nome_libro }}</td>
+                    <td>{{ book.autore }}</td>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.genere }}</td>
+                    <td>{{ book.editore }}</td>
+                    <td>{{ book.anno_pubblicazione }}</td>
+                    <td>{{ book.posizione }}</td>
+                    <td>{{ book.disponibilita }}</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-warning"
+                            onclick="apriFinestraModificaLibro('{{ book.id_libro }}', '{{ book.nome_libro }}', '{{ book.autore }}', '{{ book.isbn }}', '{{ book.genere }}', '{{ book.editore }}', '{{ book.anno_pubblicazione }}', '{{ book.posizione }}', '{{ book.disponibilita }}')">
+                        Modifica
+                    </button>
+                        <form method="post" action="{{ url_for('elimina_libro', id=book.id_libro) }}">
+                            <input type="hidden" name="id" value="{{ book.id_libro }}">
+                            <button type="submit" onclick="return confirm('Cancellare il libro eliminerà anche i suoi prestiti! \n Vuoi davvero eliminare questo libro?');" class="btn btn-sm btn-danger">Elimina</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <nav>
+            <ul class="pagination" id="pagination">
+            </ul>
+        </nav>
+    </div>
+
+    <div class="modal fade" id="modificaLibroModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modifica Libro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi finestra di dialogo"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formModificaLibro" method="post">
+                        <input type="hidden" id="mod_id_libro_hidden"> <div class="mb-3">
+                            <label for="mod_nome_libro" class="form-label">Titolo</label>
+                            <input type="text" class="form-control" id="mod_nome_libro" name="nome_libro" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mod_autore" class="form-label">Autore</label>
+                            <input type="text" class="form-control" id="mod_autore" name="autore">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mod_isbn" class="form-label">ISBN</label>
+                            <input type="text" class="form-control" id="mod_isbn" name="isbn">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mod_genere" class="form-label">Genere</label>
+                            <input type="text" class="form-control" id="mod_genere" name="genere">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mod_editore" class="form-label">Editore</label>
+                            <input type="text" class="form-control" id="mod_editore" name="editore">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mod_anno_pubblicazione" class="form-label">Anno Pubblicazione</label>
+                            <input type="number" class="form-control" id="mod_anno_pubblicazione" name="anno_pubblicazione">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mod_posizione" class="form-label">Posizione</label>
+                            <input type="text" class="form-control" id="mod_posizione" name="posizione">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                    <button type="button" class="btn btn-primary" onclick="confermaModificaLibro()">Conferma</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        const rowsPerPage = 30;
+        let currentPage = 1;
+        let allRows = [];
+
+        function displayPage(page) {
+            const rows = allRows.filter(row => row.style.display !== 'none');
+            const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+            rows.forEach((row, index) => {
+                row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) ? '' : 'none';
+            });
+
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const li = document.createElement('li');
+                li.className = `page-item ${i === page ? 'active' : ''}`;
+                li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                li.addEventListener('click', () => {
+                    currentPage = i;
+                    displayPage(i);
+                });
+                pagination.appendChild(li);
+            }
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+            } else {
+                pagination.style.display = 'flex';
+            }
+        }
+
+        function triggerSearch() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const rows = document.querySelectorAll('#bookTable tr');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+
+            currentPage = 1;
+            displayPage(currentPage);
+        }
+
+        document.getElementById('search').addEventListener('keyup', triggerSearch);
+
+        function sortTable(columnIndex) {
+            const table = document.querySelector('.table');
+            const rows = Array.from(table.tBodies[0].rows);
+            const isAscending = table.getAttribute('data-sort-order') === 'asc';
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+                return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+            });
+
+            table.tBodies[0].append(...rows);
+            table.setAttribute('data-sort-order', isAscending ? 'desc' : 'asc');
+            displayPage(currentPage);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            allRows = Array.from(document.querySelectorAll('#bookTable tr'));
+            displayPage(currentPage);
+        });
+    </script>
+    
+    <script>
+        toastr.options = {
+        "closeButton": true,
+        "positionClass": "toast-top-right",
+        "progressBar": true,
+        "timeOut": 3000,
+        "extendedTimeOut": 1000
+    };
+
+    function apriFinestraModificaLibro(id, nome_libro, autore, isbn, genere, editore, anno_pubblicazione, posizione) {
+        const form = document.getElementById('formModificaLibro');
+        form.action = `/modifica_libro/${id}`; // Imposta l'action del form
+
+        document.getElementById('mod_id_libro_hidden').value = id;
+        document.getElementById('mod_nome_libro').value = nome_libro;
+        document.getElementById('mod_autore').value = autore;
+        document.getElementById('mod_isbn').value = isbn;
+        document.getElementById('mod_genere').value = genere;
+        document.getElementById('mod_editore').value = editore;
+        document.getElementById('mod_anno_pubblicazione').value = anno_pubblicazione;
+        document.getElementById('mod_posizione').value = posizione;
+
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('modificaLibroModal')).show();
+    }
+
+    function confermaModificaLibro() {
+        var form = $('#formModificaLibro');
+        $.ajax({
+            type: 'POST',
+            url: form.attr('action'),
+            data: form.serialize(),
+            dataType: 'json', // Importante!
+            success: function(response) {
+                if (response.success) {
+                    toastr.success(response.msg || 'Libro modificato con successo.');
+                    $('#modificaLibroModal').modal('hide');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500);
+                } else {
+                    toastr.error(response.msg || 'Errore durante la modifica del libro.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Errore AJAX:", status, error, xhr.responseText);
+                toastr.error('Errore durante la modifica del libro. Riprova più tardi.');
+            }
+        });
+    }
+
+    // Gestione AJAX per l'eliminazione del libro (simile a gestisci_prestiti)
+    $('[id^="delete_book_form-"]').submit(function(event) {
+        event.preventDefault();
+        var form = $(this);
+
+        $.ajax({
+            type: 'POST',
+            url: form.attr('action'),
+            data: form.serialize(),
+            dataType: 'json', // Importante!
+            success: function(response) {
+                if (response.success) {
+                    toastr.success(response.msg || 'Libro eliminato con successo.');
+                    form.closest('tr').remove();
+                } else {
+                    toastr.error(response.msg || 'Errore durante l\'eliminazione del libro.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Errore AJAX:", status, error, xhr.responseText);
+                toastr.error('Errore durante l\'eliminazione del libro. Riprova più tardi.');
+            }
+        });
+    });
+    </script>
+</body>
+</html>

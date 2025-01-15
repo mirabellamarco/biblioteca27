@@ -1,0 +1,51 @@
+2024-12-30 17:55:38,227 - DEBUG - IP: 127.0.1.1 Esecuzione query: 
+            SELECT 
+                c.id AS id_libro,
+                c.nome_libro,
+                c.autore,
+                c.isbn,
+                c.genere,
+                c.editore, 
+                c.anno_pubblicazione,
+                c.posizione,
+                c.disponibile,
+                CASE
+                    WHEN c.disponibile = 1 THEN 'Disponibile'
+                    ELSE 'In prestito'
+                END AS disponibilita
+            FROM 
+                catalogo c
+            WHERE 
+                nome_libro LIKE %s 
+                OR autore LIKE %s 
+                OR genere LIKE %s 
+                OR anno_pubblicazione LIKE %s 
+                OR editore LIKE %s 
+                OR isbn LIKE %s;
+         con parametri : %scaffale%%scaffale%%scaffale%%scaffale%%scaffale%%scaffale%
+2024-12-30 17:55:59,417 - DEBUG - Esecuzione query login dall'IP : 127.0.1.1 con parametri: admin@admin.com
+2024-12-30 17:56:16,890 - DEBUG - IP: 127.0.1.1 Esecuzione query: 
+            SELECT 
+                c.id AS id_libro,
+                c.nome_libro,
+                c.autore,
+                c.isbn,
+                c.genere,
+                c.editore, 
+                c.anno_pubblicazione,
+                c.posizione,
+                c.disponibile,
+                CASE
+                    WHEN c.disponibile = 1 THEN 'Disponibile'
+                    ELSE 'In prestito'
+                END AS disponibilita
+            FROM 
+                catalogo c
+            WHERE 
+                nome_libro LIKE %s 
+                OR autore LIKE %s 
+                OR genere LIKE %s 
+                OR anno_pubblicazione LIKE %s 
+                OR editore LIKE %s 
+                OR isbn LIKE %s;
+         con parametri : %978-12-34567-06-0%%978-12-34567-06-0%%978-12-34567-06-0%%978-12-34567-06-0%%978-12-34567-06-0%%978-12-34567-06-0%

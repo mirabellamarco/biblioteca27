@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrazione Utente</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <style>
+    body {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    h1 {
+      color: white;
+      text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+      font-size: 50px;
+    }
+
+    .navbar {
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: left;
+      align-items: center;
+    }
+
+    .navbar .btn {
+      background-color: #ffc107;
+      border: none;
+    }
+
+    .container {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    .form-wrapper {
+      background-color: #022a6f;
+      border-radius: 30px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(7, 0, 0, 0.2);
+      color: white
+    }
+
+    .form-wrapper h1 {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .form-group input {
+      width: 50%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-wrapper button {
+      width: 20%;
+      padding: 10px;
+      background-color: #28a745;
+      color: rgb(255, 255, 255);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form-wrapper button:hover {
+      background-color: #218838;
+    }
+
+    .table-container {
+      width: auto;
+      background-color: #022a6f;
+      margin-top: 40px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 30px;
+    }
+
+    .table-container h1 {
+      margin-bottom: 20px;
+      color: rgb(255, 255, 255);
+      font-weight: 400;
+    }
+
+    .modal-content {
+      background-color: #002b36;
+      border: 1px solid;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+      border-bottom: none;
+    }
+
+    .modal-footer {
+      border-top: none;
+    }
+
+    .modal-title {
+      color: white;
+    }
+            .btn {
+      margin: 10px;
+    }
+    .navbar .btn-catalogo:hover {
+      background-color: #0d9ac9;
+      color: white;
+      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+      
+    }
+    .navbar .btn-utenti:hover {
+      background-color: #066e3c;
+      color: white;
+      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+      
+    }
+    .navbar .btn-prestiti:hover {
+      background-color: #ff8a04;
+      color: white;
+      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+      
+    }
+    .navbar .btn-libro:hover {
+      background-color: #ce9c06eb;
+      color: white;
+      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+    }
+    .btn-back:hover {
+      background-color: red;
+      color: white;
+      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+    }
+    .navbar .btn-back {
+            color: white;
+            background-color: red;
+            font-weight: bold;
+            text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+        }
+    .navbar .btn-prestiti {
+            color: white;
+            background-color: #fd7e14;
+            text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+        }       
+    .navbar .btn-libro {
+            background-color: #ffc107eb;
+            border: none;
+            color: white;
+        }
+    .navbar .btn-utenti {
+            background-color: #28a745;
+            border: none;
+            color: white;
+        }
+    .navbar .btn-catalogo {
+            background-color: #007bff;
+            border: none;
+            color: white;
+        }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-danger btn-back">
+            <span class="icon">&#8962;</span> Home
+    </a>
+    <a href="{{ url_for('catalogo') }}" class="btn btn-catalogo">Catalogo</a>
+    <a href="{{ url_for('nuovo_utente') }}" class="btn btn-utenti">Utenti</a>
+    <a href="{{ url_for('inserisci_libro') }}" class="btn btn-libro">Inserisci Libro</a>
+    <a href="{{ url_for('gestisci_prestiti') }}" class="btn btn-prestiti">Prestiti</a>
+
+</div>
+
+  <div class="modal fade" id="erroreModal" tabindex="-1" aria-labelledby="erroreModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="erroreModalLabel">Errore</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="modal-messaggio-errore"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="form-wrapper">
+      <h1>Registra nuovo utente</h1>
+      <form id="registration-form" method="post" action="{{ url_for('nuovo_utente')}}">
+        <div class="form-group">
+          <label for="reg-email">Email:</label>
+          <input type="text" id="reg-email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="codice_fiscale">Codice Fiscale:</label>
+          <input type="text" class="form-control mx-auto" id="codice_fiscale" name="codice_fiscale" required pattern=".{16,16}" title="Il codice fiscale deve essere esattamente di 16 caratteri">
+        </div>
+        <div class="form-group">
+          <label for="nome_cognome">Nome e Cognome:</label>
+          <input type="text" id="nome_cognome" name="nome_cognome" required>
+        </div>
+        <div class="form-group">
+          <label for="numero_telefono">Numero di telefono:</label>
+          <input type="text" id="numero_telefono" name="numero_telefono" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Crea utente</button>
+      </form>
+    </div>
+
+    <div class="table-container">
+      <h1>Elenco utenti</h1>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th onclick="sortTable(0)">ID utente &#8597;</th>
+            <th onclick="sortTable(1)">Codice Fiscale &#8597;</th>
+            <th onclick="sortTable(2)">Nome &#8597;</th>
+            <th onclick="sortTable(3)">Email &#8597;</th>
+            <th onclick="sortTable(4)">Telefono &#8597;</th>
+            <th>Azioni</th>
+          </tr>
+        </thead>
+        <tbody id="userTable">
+          {% for utente in utenti %}
+          <tr>
+            <td>{{ utente[0] }}</td>
+            <td>{{ utente[1] }}</td>
+            <td>{{ utente[2] }}</td>
+            <td>{{ utente[3] }}</td>
+            <td>{{ utente[4] }}</td>
+            <td>
+              <form id="formEliminaUtente-{{ utente[0] }}" method="post" action="{{ url_for('elimina_utente', id=utente[0]) }}">
+                <button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questo utente?');" class="btn btn-sm btn-danger">Elimina</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div id="pagination" class="d-flex justify-content-center mt-3"></div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      $('table').DataTable({
+        language: {
+          "decimal":        "",
+          "emptyTable":     "Nessun dato disponibile nella tabella",
+          "info":           "Visualizzazione _START_ a _END_ di _TOTAL_ elementi",
+          "infoEmpty":      "Visualizzazione 0 a 0 di 0 elementi",
+          "infoFiltered":   "(filtrati da _MAX_ elementi totali)",
+          "infoPostFix":    "",
+          "thousands":      ",",
+          "lengthMenu":     "Mostra _MENU_ elementi",
+          "loadingRecords": "Caricamento...",
+          "processing":     "Elaborazione...",
+          "search":         "Cerca:",
+          "zeroRecords":    "La ricerca non ha portato alcun risultato",
+          "paginate": {
+              "first":      "Primo",
+              "last":       "Ultimo",
+              "next":       "Successivo",
+              "previous":   "Precedente"
+          }
+        }
+      });
+    });
+  </script>
+  <script>
+    // Include Toastr initialization
+    toastr.options = {
+      "closeButton": true,
+      "positionClass": "toast-top-right",
+      "progressBar": true,
+      "timeOut": 3000,
+      "extendedTimeOut": 1000
+    };
+
+    const rowsPerPage = 10;
+    let currentPage = 1;
+
+    function renderTable() {
+      const rows = document.querySelectorAll('#userTable tr');
+      const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+      rows.forEach((row, index) => {
+        row.style.display = (index >= (currentPage - 1) * rowsPerPage && index < currentPage * rowsPerPage) ? '' : 'none';
+      });
+
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages) {
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.className = `btn btn-sm ${i === currentPage ? 'btn-primary' : 'btn-secondary'} mx-1`; // Aggiunto `btn`
+        pageButton.addEventListener('click', () => {
+          currentPage = i;
+          renderTable();
+        });
+        pagination.appendChild(pageButton);
+      }
+    }
+
+    function sortTable(columnIndex) {
+      const table = document.querySelector('.table');
+      const rows = Array.from(table.tBodies[0].rows);
+      const isAscending = table.getAttribute('data-sort-order') === 'asc';
+
+      rows.sort((a, b) => {
+        const cellA = a.cells[columnIndex].textContent.trim();
+        const cellB = b.cells[columnIndex].textContent.trim();
+        return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+      });
+
+      table.tBodies[0].append(...rows);
+      table.setAttribute('data-sort-order', isAscending ? 'desc' : 'asc');
+
+      renderTable();
+    }
+
+ 
+    $('[id^="formEliminaUtente"]').submit(function(event) { //Vuole l'id univoco per ogni form
+      event.preventDefault(); // Previene l'invio normale del form
+      var form = $(this); // Il form attuale
+
+      $.ajax({
+        type: 'POST',
+        url: form.attr('action'),
+        data: form.serialize(),
+        dataType: 'json',
+        success: function(response) {
+          if (response.success) {
+            toastr.success(response.msg);
+            form.closest('tr').remove(); // Rimuovi la riga dalla tabella dopo l'eliminazione
+            setTimeout(function() {
+                    window.location.reload();
+                }, 1500);
+            }
+          },
+            error: function(xhr, status, error) {
+              console.error("ERRORE AJAX", status, error, xhr.responseText);
+              toastr.error('Errore, verifica che questo utente non abbia prestiti registrati.');
+            }
+          });
+        });
+
+    $('#registration-form').submit(function(event) {
+    event.preventDefault();
+
+    $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        success: function(response) {
+            if (response.msg) {
+                toastr.success(response.msg);
+                setTimeout(function() {
+                    window.location.reload();
+                }, 1000);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log("Risposta di errore completa:", jqXHR); // Debug!
+            if (jqXHR.responseJSON && jqXHR.responseJSON.msg) { // Controllo esistenza di responseJSON
+                toastr.error(jqXHR.responseJSON.msg);
+            } else {
+                toastr.error("Errore durante la registrazione. Riprova più tardi."); // Messaggio di fallback
+                console.error("Errore AJAX:", textStatus, errorThrown, jqXHR.responseText);
+            }
+
+        }
+    });
+});
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTable();
+    });
+  </script>
+</body>
+</html>

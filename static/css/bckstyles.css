@@ -1,0 +1,101 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+  /* Header */
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 20px;
+    background-color: #007bff;
+  }
+  
+  .login-container {
+    display: flex;
+  }
+  
+  .login-btn {
+    background-color: #ffffff;
+    color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .login-btn:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* Main Content */
+  .main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .search-bar {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    font-size: 16px;
+  }
+  
+  .search-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+  }
+  
+  .search-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .recupero_password {
+    margin-top: 10px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.recupero_password a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.recupero_password a:hover {
+    text-decoration: underline;
+}

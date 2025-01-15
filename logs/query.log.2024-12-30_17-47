@@ -1,0 +1,100 @@
+2024-12-30 17:47:43,308 - DEBUG - IP: 127.0.1.1 Esecuzione query: 
+            SELECT 
+                c.id AS id_libro,
+                c.nome_libro,
+                c.autore,
+                c.isbn,
+                c.genere,
+                c.editore, 
+                c.anno_pubblicazione,
+                c.posizione,
+                c.disponibile,
+                CASE
+                    WHEN c.disponibile = 1 THEN 'Disponibile'
+                    ELSE 'In prestito'
+                END AS disponibilita
+            FROM 
+                catalogo c
+            WHERE 
+                nome_libro LIKE %s 
+                OR autore LIKE %s 
+                OR genere LIKE %s 
+                OR anno_pubblicazione LIKE %s 
+                OR editore LIKE %s 
+                OR isbn LIKE %s;
+         con parametri : %Giallo Storico%%Giallo Storico%%Giallo Storico%%Giallo Storico%%Giallo Storico%%Giallo Storico%
+2024-12-30 17:47:51,028 - DEBUG - IP: 127.0.1.1 Esecuzione query: 
+            SELECT 
+                c.id AS id_libro,
+                c.nome_libro,
+                c.autore,
+                c.isbn,
+                c.genere,
+                c.editore, 
+                c.anno_pubblicazione,
+                c.posizione,
+                c.disponibile,
+                CASE
+                    WHEN c.disponibile = 1 THEN 'Disponibile'
+                    ELSE 'In prestito'
+                END AS disponibilita
+            FROM 
+                catalogo c
+            WHERE 
+                nome_libro LIKE %s 
+                OR autore LIKE %s 
+                OR genere LIKE %s 
+                OR anno_pubblicazione LIKE %s 
+                OR editore LIKE %s 
+                OR isbn LIKE %s;
+         con parametri : %Bompiani%%Bompiani%%Bompiani%%Bompiani%%Bompiani%%Bompiani%
+2024-12-30 17:47:58,366 - DEBUG - IP: 127.0.1.1 Esecuzione query: 
+            SELECT 
+                c.id AS id_libro,
+                c.nome_libro,
+                c.autore,
+                c.isbn,
+                c.genere,
+                c.editore, 
+                c.anno_pubblicazione,
+                c.posizione,
+                c.disponibile,
+                CASE
+                    WHEN c.disponibile = 1 THEN 'Disponibile'
+                    ELSE 'In prestito'
+                END AS disponibilita
+            FROM 
+                catalogo c
+            WHERE 
+                nome_libro LIKE %s 
+                OR autore LIKE %s 
+                OR genere LIKE %s 
+                OR anno_pubblicazione LIKE %s 
+                OR editore LIKE %s 
+                OR isbn LIKE %s;
+         con parametri : %2000%%2000%%2000%%2000%%2000%%2000%
+2024-12-30 17:48:05,908 - DEBUG - IP: 127.0.1.1 Esecuzione query: 
+            SELECT 
+                c.id AS id_libro,
+                c.nome_libro,
+                c.autore,
+                c.isbn,
+                c.genere,
+                c.editore, 
+                c.anno_pubblicazione,
+                c.posizione,
+                c.disponibile,
+                CASE
+                    WHEN c.disponibile = 1 THEN 'Disponibile'
+                    ELSE 'In prestito'
+                END AS disponibilita
+            FROM 
+                catalogo c
+            WHERE 
+                nome_libro LIKE %s 
+                OR autore LIKE %s 
+                OR genere LIKE %s 
+                OR anno_pubblicazione LIKE %s 
+                OR editore LIKE %s 
+                OR isbn LIKE %s;
+         con parametri : %*%%*%%*%%*%%*%%*%

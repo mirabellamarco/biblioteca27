@@ -9,7 +9,7 @@ import socket
 import re
 import db
 import os
-#a
+
 # Inizializzazione del framework
 app = Flask(__name__)
 #Attivazione cookie temporanei, la sessione si chiude quando il browser si chiude

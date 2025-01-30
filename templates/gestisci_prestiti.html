@@ -141,6 +141,24 @@
     .table .stato-terminato { color: #0a7d0a; }
         .table .stato-scaduto { color: red; font-weight: bold; }
         .table .stato-incorso, .table .promemoria-inviato { color: rgb(227, 127, 14); font-weight: bold; }
+    .btn-excel {
+      background-color: #0a7d0a;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 30px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .btn-excel:hover {
+      background-color: #119c11;
+      color: white;
+      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+    }
     </style>
 </head>
 
@@ -188,6 +206,11 @@
 
   </div>
     <div class="table-container">
+      <a href="{{ url_for('download_prestiti_excel') }}" class="btn-excel">
+        Esporta Excel
+      </a>
+      <br>
+      <br>
       <h1>Storico prestiti</h1>
       <table class="table table-striped" id="prestiti-table">
           <thead>
@@ -242,6 +265,7 @@
               {% endfor %}
             </tbody>
       </table>
+      
     </div>
     <div>
       

@@ -235,6 +235,37 @@ def insert_table_prestiti(prestito_details):
         connection_close(connection, cursor)
 
 
+def export_prestiti_query():
+    try:
+        connection, cursor = connection_establish()
+        query = """
+        SELECT 
+            p.id as id_prestito,
+            c.nome_libro,
+            c.isbn,
+            u.nome_cognome,
+            u.email,
+            DATE_FORMAT(p.data_prestito, '%d/%m/%Y') as data_prestito,
+            DATE_FORMAT(p.data_restituzione, '%d/%m/%Y') as data_restituzione,
+            DATE_FORMAT(p.data_restituzione_prevista, '%d/%m/%Y') as data_restituzione_prevista,
+            CASE 
+                WHEN p.data_restituzione IS NOT NULL THEN 'Terminato'
+                WHEN CURRENT_DATE > p.data_restituzione_prevista THEN 'Scaduto'
+                ELSE 'In Corso'
+            END as stato
+        FROM prestiti p
+        JOIN catalogo c ON p.id_libro = c.id
+        JOIN utenti u ON p.id_utente = u.id
+        ORDER BY p.data_prestito DESC
+        """
+        cursor.execute(query)
+        return cursor.fetchall()
+    except Error as e:
+        print(f"Errore query: {e}")
+        return None
+    finally:
+        connection_close(connection, cursor)
+
 #region VISTE 
 def vista_prestiti():
     """

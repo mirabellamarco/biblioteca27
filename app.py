@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, session
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session, send_file
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from functools import wraps
 from datetime import datetime, timedelta, date
 import logging
 from logging.handlers import TimedRotatingFileHandler
+from io import BytesIO
+import xlsxwriter
 import socket
 import re
 import db
@@ -455,6 +457,54 @@ def elimina_prestito(id):
 
     finally:
         conn.close()
+
+
+@app.route('/download_prestiti_excel')
+def download_prestiti_excel():
+    data = db.export_prestiti_query()
+    if not data:
+        return "Errore nel recupero dati", 500
+        
+    output = BytesIO()
+    workbook = xlsxwriter.Workbook(output)
+    worksheet = workbook.add_worksheet()
+
+    # Stili
+    header_format = workbook.add_format({
+        'bold': True,
+        'bg_color': '#A9A9A9',
+        'border': 1
+    })
+
+    cell_format = workbook.add_format({
+        'border': 1
+    })
+
+    # Headers
+    headers = ['ID', 'Libro', 'ISBN', 'Utente', 'Email', 'Data Prestito', 
+              'Data Restituzione', 'Data Prevista', 'Stato']
+    
+    for col, header in enumerate(headers):
+        worksheet.write(0, col, header, header_format)
+
+    # Dati
+    for row, record in enumerate(data, 1):
+        for col, value in enumerate(record):
+            worksheet.write(row, col, value, cell_format)
+
+    # Autofit colonne
+    for col in range(len(headers)):
+        worksheet.set_column(col, col, 20)
+    
+    workbook.close()
+    output.seek(0)
+    
+    return send_file(
+        output,
+        as_attachment=True,
+        download_name='prestiti.xlsx',
+        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
 
 # region - CATALOGO
 @app.route('/catalogo')

@@ -176,6 +176,34 @@
             border: none;
             color: white;
         }
+        .edit-mode input {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #007bff;
+      border-radius: 4px;
+    }
+    
+    .edit-controls {
+      display: none;
+    }
+    
+    .edit-mode .edit-controls {
+      display: block;
+    }
+    
+    .edit-mode .normal-controls {
+      display: none;
+    }
+
+    
+    .editable {
+      cursor: pointer;
+    }
+    
+    .editable:hover {
+      background-color: rgba(0, 123, 255, 0.1);
+    }
+
   </style>
 </head>
 
@@ -233,39 +261,48 @@
       </form>
     </div>
 
-    <div class="table-container">
-      <h1>Elenco utenti</h1>
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th onclick="sortTable(0)">ID utente &#8597;</th>
-            <th onclick="sortTable(1)">Codice Fiscale &#8597;</th>
-            <th onclick="sortTable(2)">Nome &#8597;</th>
-            <th onclick="sortTable(3)">Email &#8597;</th>
-            <th onclick="sortTable(4)">Telefono &#8597;</th>
-            <th>Azioni</th>
-          </tr>
-        </thead>
-        <tbody id="userTable">
-          {% for utente in utenti %}
-          <tr>
-            <td>{{ utente[0] }}</td>
-            <td>{{ utente[1] }}</td>
-            <td>{{ utente[2] }}</td>
-            <td>{{ utente[3] }}</td>
-            <td>{{ utente[4] }}</td>
-            <td>
-              <form id="formEliminaUtente-{{ utente[0] }}" method="post" action="{{ url_for('elimina_utente', id=utente[0]) }}">
-                <button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questo utente?');" class="btn btn-sm btn-danger">Elimina</button>
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <div id="pagination" class="d-flex justify-content-center mt-3"></div>
+    <div class="container">
+      <!-- Previous container content remains unchanged until table -->
+      
+      <div class="table-container">
+        <h1>Elenco utenti</h1>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th onclick="sortTable(0)">ID utente &#8597;</th>
+              <th onclick="sortTable(1)">Codice Fiscale &#8597;</th>
+              <th onclick="sortTable(2)">Nome &#8597;</th>
+              <th onclick="sortTable(3)">Email &#8597;</th>
+              <th onclick="sortTable(4)">Telefono &#8597;</th>
+              <th>Azioni</th>
+            </tr>
+          </thead>
+          <tbody id="userTable">
+            {% for utente in utenti %}
+            <tr id="row-{{ utente[0] }}" data-id="{{ utente[0] }}">
+              <td>{{ utente[0] }}</td>
+              <td class="editable" data-field="codice_fiscale">{{ utente[1] }}</td>
+              <td class="editable" data-field="nome_cognome">{{ utente[2] }}</td>
+              <td class="editable" data-field="email">{{ utente[3] }}</td>
+              <td class="editable" data-field="numero_telefono">{{ utente[4] }}</td>
+              <td>
+                <div class="normal-controls">
+                  <button onclick="attivaModifica('{{ utente[0] }}')" class="btn btn-sm btn-warning">Modifica</button>
+                  <form id="formEliminaUtente-{{ utente[0] }}" method="post" action="{{ url_for('elimina_utente', id=utente[0]) }}" style="display: inline;">
+                    <button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questo utente?');" class="btn btn-sm btn-danger">Elimina</button>
+                  </form>
+                </div>
+                <div class="edit-controls">
+                  <button onclick="salvaModifiche('{{ utente[0] }}')" class="btn btn-sm btn-success">Salva</button>
+                  <button onclick="annullaModifica('{{ utente[0] }}')" class="btn btn-sm btn-secondary">Annulla</button>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -413,6 +450,82 @@
     document.addEventListener('DOMContentLoaded', () => {
       renderTable();
     });
+
+    let originalValues = {};
+
+    function attivaModifica(id) {
+      const row = document.getElementById(`row-${id}`);
+      row.classList.add('edit-mode');
+      
+      // Store original values
+      originalValues[id] = {};
+      
+      // Convert cells to input fields
+      row.querySelectorAll('.editable').forEach(cell => {
+        const value = cell.textContent.trim();
+        const field = cell.dataset.field;
+        originalValues[id][field] = value;
+        
+        cell.innerHTML = `<input type="text" name="${field}" value="${value}">`;
+      });
+    }
+
+    function annullaModifica(id) {
+      const row = document.getElementById(`row-${id}`);
+      row.classList.remove('edit-mode');
+      
+      // Restore original values
+      row.querySelectorAll('.editable').forEach(cell => {
+        const field = cell.dataset.field;
+        cell.textContent = originalValues[id][field];
+      });
+      
+      delete originalValues[id];
+    }
+
+    function salvaModifiche(id) {
+      const row = document.getElementById(`row-${id}`);
+      const data = {
+        id: id
+      };
+      
+      // Collect values from inputs
+      row.querySelectorAll('.editable input').forEach(input => {
+        data[input.name] = input.value;
+      });
+      
+      // Send AJAX request
+      $.ajax({
+        type: 'POST',
+        url: `/modifica_utente/${id}`,
+        data: data,
+        dataType: 'json',
+        success: function(response) {
+          if (response.success) {
+            toastr.success(response.msg || 'Utente modificato con successo.');
+            
+            // Update cells with new values
+            row.querySelectorAll('.editable').forEach(cell => {
+              const field = cell.dataset.field;
+              cell.textContent = data[field];
+            });
+            
+            // Exit edit mode
+            row.classList.remove('edit-mode');
+            delete originalValues[id];
+          } else {
+            toastr.error(response.msg || 'Errore durante la modifica dell\'utente.');
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error("Errore AJAX:", status, error, xhr.responseText);
+          toastr.error('Errore durante la modifica dell\'utente. Riprova più tardi.');
+          
+          // Restore original values on error
+          annullaModifica(id);
+        }
+      });
+    }
   </script>
 </body>
 </html>

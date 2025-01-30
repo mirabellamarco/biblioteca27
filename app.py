@@ -633,6 +633,49 @@ def nuovo_utente():
     finally:
         conn.close()
 
+#Endpoint per la modifica di un utente
+@app.route('/modifica_utente/<int:id>', methods=['POST'])
+@login_required
+def modifica_utente(id):
+    email = request.form['email'].strip()
+    codice_fiscale = request.form['codice_fiscale'].upper().strip()
+    nome_cognome = request.form['nome_cognome']
+    numero_telefono = request.form['numero_telefono'].strip()
+
+    conn, cursor = db.connection_establish()
+    if not conn:
+        return jsonify({"success": False, "msg": "Errore di connessione al database"}), 500
+
+    try:
+        # Verifica email duplicata escludendo l'utente corrente
+        cursor.execute("SELECT id FROM utenti WHERE email = %s AND id != %s", (email, id))
+        if cursor.fetchone():
+            return jsonify({"success": False, "msg": "Email già in uso"}), 400
+
+        # Verifica codice fiscale duplicato escludendo l'utente corrente
+        cursor.execute("SELECT id FROM utenti WHERE codice_fiscale = %s AND id != %s", (codice_fiscale, id))
+        if cursor.fetchone():
+            return jsonify({"success": False, "msg": "Codice fiscale già presente nel database"}), 400
+
+        # Aggiorna i dati dell'utente
+        query = """
+            UPDATE utenti 
+            SET email = %s, codice_fiscale = %s, nome_cognome = %s, telefono = %s
+            WHERE id = %s
+        """
+        cursor.execute(query, (email, codice_fiscale, nome_cognome, numero_telefono, id))
+        conn.commit()
+
+        return jsonify({"success": True, "msg": "Utente modificato con successo"}), 200
+
+    except Exception as e:
+        print(f"Errore del database: {e}")
+        return jsonify({"success": False, "msg": "Errore durante la modifica"}), 500
+
+    finally:
+        conn.close()
+        
+        
 #Endpoint per l'elimina_utente
 @app.route('/elimina_utente/<int:id>', methods=['POST'])
 @login_required
@@ -656,4 +699,4 @@ def elimina_utente(id):
 
 
 if __name__ == '__main__':
-    app.run(ssl_context = 'adhoc', debug=True,)
+    app.run(ssl_context = ('cert.pem', 'key.pem'), debug=True)

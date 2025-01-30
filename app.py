@@ -499,10 +499,11 @@ def download_prestiti_excel():
     workbook.close()
     output.seek(0)
     
+    #export del file
     return send_file(
         output,
         as_attachment=True,
-        download_name='prestiti.xlsx',
+        download_name= (datetime.today().strftime('%Y-%m-%d')) + '_prestiti.xlsx',
         mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 

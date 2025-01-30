@@ -10,13 +10,21 @@
             display: flex; /* Usa flexbox per disporre le GIF orizzontalmente */
             flex-wrap: wrap; /* Le GIF andranno a capo se lo spazio è insufficiente */
             gap: 10px; /* Spazio tra le GIF */
-            justify-content: left; /* Centra le GIF */
+            justify-content: center; /* Centra le GIF */
         }
         /* Stile per ogni GIF */
         .gif-container iframe {
             flex-shrink: 0; /* Impedisce il ridimensionamento delle GIF */
-            width: 150px;
-            height: 150px;
+            width: 400px;
+            height: 400px;
+            
+        }
+        body { font-size: xx-large;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
         }
     </style>
 </head>
@@ -48,7 +56,7 @@
         <h1>⛔ ERRORE ⛔ </h1>
         <p>Utente non autorizzato!</p>
         <div class="gif-container">
-            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fih0.redbubble.net%2Fimage.507199006.7519%2Fflat%2C750x%2C075%2Cf-pad%2C750x1000%2Cf8f8f8.u1.jpg&f=1&nofb=1&ipt=d7ad6a00b8077d326ec372f2ca2f54c12f866b6d8bba22a5d6ab92bd2400971c&ipo=images" style="width: 300px; height: auto;">
+            <img src="static/img/noaccess.gif"style="width: 300px; height: auto;">
         </div>
         <a href="/" title="No problem"> Per favore effettua il login 👀</a>
     {% endif %}  

@@ -1,111 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Biblioteca27</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background: linear-gradient(to right, #6a11cb, #2575fc);
-      color: white;
-      font-family: Arial, sans-serif;
-    }
-    .header {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      padding: 10px 20px;
-      background-color: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: flex-end;
-    }
-    .login-btn {
-      color: rgb(255, 255, 255);
-      background-color: green;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 10px 20px;
-      border: 0.5 px solid white;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    .login-btn:hover {
-      background-color: white;
-      color: green;
-      transition: all 0.5s ease;
-    }
-    .main-content {
-      text-align: center;
-    }
-    .title {
-      font-size: 3rem;
-      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      margin-left: 0 auto;
-      margin-right: 0 auto;
-      margin-bottom:50px;
-      text-align: center;
-    }
-    .search-container {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-    .search-bar {
-      padding: 10px;
-      font-size: 1rem;
-      border: 2px solid white;
-      border-radius: 10px;
-      outline: none;
-      transition: border-color 0.3s ease;
-      width: 600px;
-      margin-left: 0 auto;
-      margin-right: 0 auto;
-    }
-    .search-bar:focus {
-      border-color: #66a6ff;
-    }
-    .search-btn {
-      padding: 10px 30px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 10px;
-      background-color: #6a11cb;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      
-    }
-    .search-btn:hover {
-      background-color: white;
-      color: #6a11cb;
-    }
-  </style>
-</head>
-<body>
-  <!-- Header -->
-  <header class="header">
-    <a href="{{ url_for('auth') }}" class="login-btn">Login</a>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biblioteca27</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        color: white;
+        font-family: Arial, sans-serif;
+      }
+      .header {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        padding: 10px 20px;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: flex-end;
+      }
+      .login-btn {
+        color: rgb(255, 255, 255);
+        background-color: green;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: 0.5 px solid white;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .login-btn:hover {
+        background-color: white;
+        color: green;
+        transition: all 0.5s ease;
+      }
+      .main-content {
+        text-align: center;
+      }
+      .title {
+        font-size: 3rem;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        margin-left: 0 auto;
+        margin-right: 0 auto;
+        margin-bottom: 50px;
+        text-align: center;
+      }
+      .search-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+      .search-bar {
+        padding: 10px;
+        font-size: 1rem;
+        border: 2px solid white;
+        border-radius: 10px;
+        outline: none;
+        transition: border-color 0.3s ease;
+        width: 600px;
+        margin-left: 0 auto;
+        margin-right: 0 auto;
+      }
+      .search-bar:focus {
+        border-color: #66a6ff;
+      }
+      .search-btn {
+        padding: 10px 30px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 10px;
+        background-color: #6a11cb;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .search-btn:hover {
+        background-color: white;
+        color: #6a11cb;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <a href="{{ url_for('auth') }}" class="login-btn">Login</a>
+    </header>
 
-  <!-- Main Content -->
-  <main class="main-content">
-    <h1 class="title">Ciao! </h1>
-    <div class="search-container">
-      <form action="/cerca" method="POST">
-        <input type="text" name="ricerca" class="search-bar" placeholder="Cerca nella biblioteca per titolo, autore, ISBN, genere, editore, anno, posizione">
-        <button class="search-btn" type="submit">Cerca</button>
-      </form>
-    </div>
-  </main>
+    <!-- Main Content -->
+    <main class="main-content">
+      <h1 class="title">Ciao!</h1>
+      <div class="search-container">
+        <form action="/cerca" method="POST">
+          <input
+            type="text"
+            name="ricerca"
+            class="search-bar"
+            placeholder="Cerca nella biblioteca per titolo, autore, ISBN, genere, editore, anno, posizione"
+          />
+          <button class="search-btn" type="submit">Cerca</button>
+        </form>
+      </div>
+    </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

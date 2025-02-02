@@ -4,12 +4,14 @@ from dotenv import load_dotenv
 from mariadb import Error
 from prettytable import PrettyTable
 from flask_bcrypt import Bcrypt
+
 bcrypt = Bcrypt()
 
 # ESEGUIRE in cmd 'pip install -r requirements.txt' PER ESEGUIRE IL CODICE
 
-#region CONNESSIONE
-load_dotenv() #recupero sicuro delle credenziali da file.env
+# region CONNESSIONE
+load_dotenv()  # recupero sicuro delle credenziali da file.env
+
 
 def connection_establish():
     """
@@ -17,12 +19,13 @@ def connection_establish():
     """
     connection = mariadb.connect(
         host="localhost",
-        user=os.getenv("DB_USER"), 
+        user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
-        database="biblioteca27"
+        database="biblioteca27",
     )
     cursor = connection.cursor()
     return connection, cursor
+
 
 def connection_close(connection, cursor):
     """
@@ -33,21 +36,22 @@ def connection_close(connection, cursor):
     if connection:
         connection.close()
 
-#endregion
 
-#region MK.DATABASE
+# endregion
+
+
+# region MK.DATABASE
 def first_connection():
     """
     Funzione per stabilire la prima connessione a MariaDB.
     """
     connection = mariadb.connect(
-        host="localhost",
-        user=os.getenv("DB_USER"), 
-        password=os.getenv("DB_PASSWORD")
+        host="localhost", user=os.getenv("DB_USER"), password=os.getenv("DB_PASSWORD")
     )
     cursor = connection.cursor()
     return connection, cursor
-        
+
+
 def create_db():
     """
     Funzione per creare il database biblioteca27.
@@ -60,9 +64,12 @@ def create_db():
         cursor.execute("CREATE DATABASE IF NOT EXISTS biblioteca27;")
         print("Database creato con successo o già esistente\n")
     except Error as e:
-        print(f"Errore durante la connessione a MariaDB o durante la creazione del database: {e}")
+        print(
+            f"Errore durante la connessione a MariaDB o durante la creazione del database: {e}"
+        )
     finally:
         connection_close(connection, cursor)
+
 
 def create_table_catalogo():
     """
@@ -90,6 +97,7 @@ def create_table_catalogo():
     finally:
         connection_close(connection, cursor)
 
+
 def create_table_utenti():
     """
     Funzione per creare la tabella utenti nel database biblioteca27.
@@ -113,17 +121,22 @@ def create_table_utenti():
         print(f"Errore durante la creazione della tabella: {e}")
     finally:
         connection_close(connection, cursor)
-        
+
+
 def stampa_query(cursor):
-        table = PrettyTable() #formattazione tabella per stampa
-        table.field_names = [desc[0] for desc in cursor.description] #recupera i nomi delle colonne da cursor
-        for row in cursor:
-           table.add_row(row)
-        print(table)
+    table = PrettyTable()  # formattazione tabella per stampa
+    table.field_names = [
+        desc[0] for desc in cursor.description
+    ]  # recupera i nomi delle colonne da cursor
+    for row in cursor:
+        table.add_row(row)
+    print(table)
 
-#endregion
 
-#region INSERT
+# endregion
+
+
+# region INSERT
 def insert_table_utenti(user_details):
     """
     Funzione per inserire un utente nella tabella utenti.
@@ -150,6 +163,7 @@ def insert_table_utenti(user_details):
     finally:
         connection_close(connection, cursor)
 
+
 def insert_table_catalogo(book_details):
     """
     Funzione per inserire un libro nella tabella catalogo.
@@ -175,7 +189,8 @@ def insert_table_catalogo(book_details):
     finally:
         connection_close(connection, cursor)
 
-#region PRESTITI
+
+# region PRESTITI
 def create_table_prestiti():
     """
     Funzione per creare la tabella prestiti nel database biblioteca27.
@@ -202,6 +217,7 @@ def create_table_prestiti():
     finally:
         connection_close(connection, cursor)
 
+
 def insert_table_prestiti(prestito_details):
     """
     Funzione per inserire o aggiornare un prestito nella tabella prestiti.
@@ -219,7 +235,9 @@ def insert_table_prestiti(prestito_details):
         """
         # Verifica se la data di restituzione è fornita
         if len(prestito_details) == 3:
-            prestito_details.append(None)  # Aggiungi NULL se manca la data di restituzione
+            prestito_details.append(
+                None
+            )  # Aggiungi NULL se manca la data di restituzione
         cursor.execute(insert_or_update_query, prestito_details)
         agg_disp_query = """
         UPDATE catalogo
@@ -266,7 +284,8 @@ def export_prestiti_query():
     finally:
         connection_close(connection, cursor)
 
-#region VISTE 
+
+# region VISTE
 def vista_prestiti():
     """
     Funzione per visualizzare il catalogo con i dettagli dei prestiti.
@@ -299,6 +318,7 @@ def vista_prestiti():
     finally:
         connection_close(connection, cursor)
 
+
 def visualizza_intero_db():
     """
     Funzione per visualizzare tutte le tabelle del database biblioteca27.
@@ -329,6 +349,7 @@ def visualizza_intero_db():
     finally:
         connection_close(connection, cursor)
 
+
 def inserisci_esempi():
     """
     Funzione per popolare il database con libri di esempio
@@ -356,6 +377,7 @@ VALUES
         print(f"Errore durante il popolamento del DB: {e}")
     finally:
         connection_close(connection, cursor)
+
 
 def inserisci_esempi_utenti():
     """
@@ -389,8 +411,7 @@ VALUES
         connection_close(connection, cursor)
 
 
-
-#region MAIN
+# region MAIN
 ######## MAIN ########
 if __name__ == "__main__":
     create_db()
@@ -410,21 +431,34 @@ if __name__ == "__main__":
         print("--------------------------\n--------------------------\n")
         scelta = input()
         if scelta == "1":
-            book_details = input("Inserisci i dettagli del libro (Titolo, autore, isbn (formato 978-12-34567-01-0), genere, editore, anno di pubblicazione, posizione scaffale): ")
+            book_details = input(
+                "Inserisci i dettagli del libro (Titolo, autore, isbn (formato 978-12-34567-01-0), genere, editore, anno di pubblicazione, posizione scaffale): "
+            )
             book_details = book_details.split(",")
             insert_table_catalogo(book_details)
         elif scelta == "2":
             codice_fiscale = input("\nInserisci il codice fiscale: ")
             admin = input("\nInserisci 1 se l'utente ha admin, 0 altrimenti: ")
             password = input(str("\nInserisci la password: "))
-            hashed_password = bcrypt.generate_password_hash(password=password).decode('utf-8')
+            hashed_password = bcrypt.generate_password_hash(password=password).decode(
+                "utf-8"
+            )
             nome_cognome = input("\nInserisci il nome e il cognome: ")
             email = input("\nInserisci l'email: ")
             telefono = input("\nInserisci il telefono: ")
-            user_details = [codice_fiscale, admin, hashed_password, nome_cognome, email, telefono]
+            user_details = [
+                codice_fiscale,
+                admin,
+                hashed_password,
+                nome_cognome,
+                email,
+                telefono,
+            ]
             insert_table_utenti(user_details)
         elif scelta == "3":
-            prestito_details = input("Inserisci i dettagli del prestito (id_utente, id_libro, data_prestito, data_restituzione, data_restituzione_prevista (formato 1970-01-01)): ")
+            prestito_details = input(
+                "Inserisci i dettagli del prestito (id_utente, id_libro, data_prestito, data_restituzione, data_restituzione_prevista (formato 1970-01-01)): "
+            )
             prestito_details = prestito_details.split(",")
             insert_table_prestiti(prestito_details)
         elif scelta == "4":
@@ -439,4 +473,6 @@ if __name__ == "__main__":
             print("Programma terminato.")
             break
         else:
-            print("Opzione non valida. Per favore, scegli una delle opzioni disponibili.")
+            print(
+                "Opzione non valida. Per favore, scegli una delle opzioni disponibili."
+            )

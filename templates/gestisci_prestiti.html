@@ -1,31 +1,35 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestione Biblioteca</title> 
-    <style>
-        body {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            min-height: 100vh;
-            color: white;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestione Biblioteca</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      min-height: 100vh;
+      color: white;
     }
+
     .navbar {
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        padding: 10px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 1000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-      .container {
+
+    .container {
       margin-top: 100px;
     }
-    .form-wrapper{
+
+    .form-wrapper {
       background-color: white;
       border-radius: 10px;
       padding: 20px;
@@ -35,64 +39,76 @@
       text-decoration-color: black;
       margin-left: auto;
       margin-right: auto;
-        }
+    }
+
     .btn {
       margin: 10px;
     }
+
     .navbar .btn-catalogo:hover {
       background-color: #0d9ac9;
       color: white;
-      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-      
+      text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+
     }
+
     .navbar .btn-utenti:hover {
       background-color: #066e3c;
       color: white;
-      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-      
+      text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+
     }
+
     .navbar .btn-prestiti:hover {
       background-color: #ff8a04;
       color: white;
-      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-      
+      text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+
     }
+
     .navbar .btn-libro:hover {
       background-color: #ce9c06eb;
       color: white;
-      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-      
+      text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+
     }
+
     .navbar .btn-back {
-            color: white;
-            font-weight: bold;
-            text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-        }
-    .navbar .btn-prestiti {
-            color: white;
-            background-color: #fd7e14;
-            text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-        }       
-    .navbar .btn-libro {
-            background-color: #ffc107eb;
-            border: none;
-            color: white;
-        }
-    .navbar .btn-utenti {
-            background-color: #28a745;
-            border: none;
-            color: white;
-        }
-    .navbar .btn-catalogo {
-            background-color: #007bff;
-            border: none;
-            color: white;
-        }
-    .navbar .btn-back:hover {
-            background-color: #e71e08;
-            color: white;
-            text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+      color: white;
+      font-weight: bold;
+      text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
     }
+
+    .navbar .btn-prestiti {
+      color: white;
+      background-color: #fd7e14;
+      text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .navbar .btn-libro {
+      background-color: #ffc107eb;
+      border: none;
+      color: white;
+    }
+
+    .navbar .btn-utenti {
+      background-color: #28a745;
+      border: none;
+      color: white;
+    }
+
+    .navbar .btn-catalogo {
+      background-color: #007bff;
+      border: none;
+      color: white;
+    }
+
+    .navbar .btn-back:hover {
+      background-color: #e71e08;
+      color: white;
+      text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+    }
+
     .table-container {
       background-color: white;
       border-radius: 10px;
@@ -100,24 +116,28 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       color: black;
       text-decoration-color: black;
-      width:max-content;
+      width: max-content;
       align-self: flex-start;
       margin: 0 auto;
-        }
+    }
+
     .btn-primary {
       background-color: #28a745;
     }
+
     .btn-warning {
       background-color: #ffc107;
     }
+
     .pagination {
       justify-content: center;
     }
+
     .modal-content {
-      background-color:#002b36;
+      background-color: #002b36;
       border: 1px solid;
       border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
     }
 
@@ -132,15 +152,29 @@
     .modal-title {
       color: rgb(0, 0, 0);
     }
+
     .navbar-buttons {
-        display: flex;
-        justify-content: center;
-       ;
+      display: flex;
+      justify-content: center;
+      ;
     }
+
     /* Stili specifici per la tabella (colori stato, ecc.) */
-    .table .stato-terminato { color: #0a7d0a; }
-        .table .stato-scaduto { color: red; font-weight: bold; }
-        .table .stato-incorso, .table .promemoria-inviato { color: rgb(227, 127, 14); font-weight: bold; }
+    .table .stato-terminato {
+      color: #0a7d0a;
+    }
+
+    .table .stato-scaduto {
+      color: red;
+      font-weight: bold;
+    }
+
+    .table .stato-incorso,
+    .table .promemoria-inviato {
+      color: rgb(227, 127, 14);
+      font-weight: bold;
+    }
+
     .btn-excel {
       background-color: #0a7d0a;
       border: none;
@@ -154,24 +188,25 @@
       cursor: pointer;
       border-radius: 4px;
     }
+
     .btn-excel:hover {
       background-color: #119c11;
       color: white;
-      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+      text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
     }
-    </style>
+  </style>
 </head>
 
 <body>
   <div class="navbar">
     <div class="navbar-buttons">
-        <a href="{{ url_for('dashboard') }}" class="btn btn-danger btn-back">
-            <span class="icon">&#8962;</span> Home
-  </a>
-        <a href="{{ url_for('catalogo') }}" class="btn btn-catalogo">Catalogo</a>
-        <a href="{{ url_for('nuovo_utente') }}" class="btn btn-utenti">Utenti</a>
-        <a href="{{ url_for('inserisci_libro') }}" class="btn btn-libro">Inserisci Libro</a>
-        <a href="{{ url_for('gestisci_prestiti') }}" class="btn btn-prestiti">Prestiti</a>
+      <a href="{{ url_for('dashboard') }}" class="btn btn-danger btn-back">
+        <span class="icon">&#8962;</span> Home
+      </a>
+      <a href="{{ url_for('catalogo') }}" class="btn btn-catalogo">Catalogo</a>
+      <a href="{{ url_for('nuovo_utente') }}" class="btn btn-utenti">Utenti</a>
+      <a href="{{ url_for('inserisci_libro') }}" class="btn btn-libro">Inserisci Libro</a>
+      <a href="{{ url_for('gestisci_prestiti') }}" class="btn btn-prestiti">Prestiti</a>
     </div>
   </div>
 
@@ -193,7 +228,8 @@
           <input type="date" class="form-control" id="data_prestito" name="data_prestito" required>
         </div>
         <div class="mb-3">
-          <label for="data_restituzione" class="form-label">Data di restituzione (lascia vuoto per la creazione di un nuovo prestito)</label>
+          <label for="data_restituzione" class="form-label">Data di restituzione (lascia vuoto per la creazione di un
+            nuovo prestito)</label>
           <input type="date" class="form-control" id="data_restituzione" name="data_restituzione">
         </div>
         <div class="mb-3">
@@ -205,107 +241,110 @@
     </div>
 
   </div>
-    <div class="table-container">
-      <a href="{{ url_for('download_prestiti_excel') }}" class="btn-excel">
-        Esporta Excel
-      </a>
-      <br>
-      <br>
-      <h1>Storico prestiti</h1>
-      <table class="table table-striped" id="prestiti-table">
-          <thead>
-              <tr>
-                  <th>ID prestito</th>
-                  <th>ID libro</th>
-                  <th>Titolo</th>
-                  <th>ISBN</th>
-                  <th>Email</th>
-                  <th>Nome utente</th>
-                  <th>Data prestito</th>
-                  <th>Data restituzione</th>
-                  <th>Data restituzione prevista</th>
-                  <th>Promemoria</th>
-                  <th>Stato</th>
-                  <th>Azioni</th>
-              </tr>
-          </thead>
-          <tbody>
-              {% for prestito in prestiti %}
-              <tr>
-                  <td>{{ prestito.id_prestito }}</td>
-                  <td>{{ prestito.id_libro }}</td>
-                  <td>{{ prestito.nome_libro }}</td>
-                  <td>{{ prestito.isbn }}</td>
-                  <td>{{ prestito.email }}</td>
-                  <td>{{ prestito.nome_cognome }}</td>
-                  <td>{{ prestito.data_prestito }}</td>
-                  <td {% if prestito.data_restituzione %}class="restituito"{% endif %}>{{ prestito.data_restituzione }}</td>
-                  <td>{{ prestito.data_restituzione_prevista_formattata }}</td>
-                  <td>
-                      {% if prestito.promemoria_inviato == 1 %}
-                      <span class="promemoria-inviato">Inviato</span>
-                      {% else %}
-                      <span>Non inviato</span>
-                      {% endif %}
-                  </td>
-                  <td class="stato-{{ prestito.stato_prestito | lower | replace(' ', '') }}">
-                      {{ prestito.stato_prestito }}
-                  </td>
-                  <td>
-                      <button type="button" class="btn btn-sm btn-warning"
-                          onclick="apriFinestraModifica('{{ prestito.id_prestito }}', '{{ prestito.id_libro }}', '{{ prestito.data_prestito }}', '{{ prestito.data_restituzione }}', '{{ prestito.data_restituzione_prevista_formattata }}')">
-                          Modifica
-                      </button>
-                      <form id="delete_book_form-{{ prestito.id_prestito }}" method="post" action="{{ url_for('elimina_prestito', id=prestito.id_prestito) }}" style="display:inline;">
-                          <button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questo prestito?');"
-                              class="btn btn-sm btn-danger">Elimina</button>
-                      </form>
-                  </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-      </table>
-      
-    </div>
-    <div>
-      
-    </div>
-    <nav>
-      <ul class="pagination" id="prestitiPagination"></ul>
-    </nav>
+  <div class="table-container">
+    <a href="{{ url_for('download_prestiti_excel') }}" class="btn-excel">
+      Esporta Excel
+    </a>
+    <br>
+    <br>
+    <h1>Storico prestiti</h1>
+    <table class="table table-striped" id="prestiti-table">
+      <thead>
+        <tr>
+          <th>ID prestito</th>
+          <th>ID libro</th>
+          <th>Titolo</th>
+          <th>ISBN</th>
+          <th>Email</th>
+          <th>Nome utente</th>
+          <th>Data prestito</th>
+          <th>Data restituzione</th>
+          <th>Data restituzione prevista</th>
+          <th>Promemoria</th>
+          <th>Stato</th>
+          <th>Azioni</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prestito in prestiti %}
+        <tr>
+          <td>{{ prestito.id_prestito }}</td>
+          <td>{{ prestito.id_libro }}</td>
+          <td>{{ prestito.nome_libro }}</td>
+          <td>{{ prestito.isbn }}</td>
+          <td>{{ prestito.email }}</td>
+          <td>{{ prestito.nome_cognome }}</td>
+          <td>{{ prestito.data_prestito }}</td>
+          <td {% if prestito.data_restituzione %}class="restituito" {% endif %}>{{ prestito.data_restituzione }}</td>
+          <td>{{ prestito.data_restituzione_prevista_formattata }}</td>
+          <td>
+            {% if prestito.promemoria_inviato == 1 %}
+            <span class="promemoria-inviato">Inviato</span>
+            {% else %}
+            <span>Non inviato</span>
+            {% endif %}
+          </td>
+          <td class="stato-{{ prestito.stato_prestito | lower | replace(' ', '') }}">
+            {{ prestito.stato_prestito }}
+          </td>
+          <td>
+            <button type="button" class="btn btn-sm btn-warning"
+              onclick="apriFinestraModifica('{{ prestito.id_prestito }}', '{{ prestito.id_libro }}', '{{ prestito.data_prestito }}', '{{ prestito.data_restituzione }}', '{{ prestito.data_restituzione_prevista_formattata }}')">
+              Modifica
+            </button>
+            <form id="delete_book_form-{{ prestito.id_prestito }}" method="post"
+              action="{{ url_for('elimina_prestito', id=prestito.id_prestito) }}" style="display:inline;">
+              <button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questo prestito?');"
+                class="btn btn-sm btn-danger">Elimina</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+  <div>
+
+  </div>
+  <nav>
+    <ul class="pagination" id="prestitiPagination"></ul>
+  </nav>
   </div>
 
-      <div class="modal fade" id="modificaPrestitoModal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Modifica Prestito</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi finestra di dialogo"></button>
+  <div class="modal fade" id="modificaPrestitoModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modifica Prestito</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Chiudi finestra di dialogo"></button>
+        </div>
+        <div class="modal-body">
+          <form id="modifica-prestito-form">
+            <input type="hidden" id="mod_id_libro" name="id_libro">
+            <div class="mb-3">
+              <label for="mod_data_prestito" class="form-label">Data prestito</label>
+              <input type="date" class="form-control" id="mod_data_prestito" name="data_prestito">
             </div>
-            <div class="modal-body">
-              <form id="modifica-prestito-form">
-                <input type="hidden" id="mod_id_libro" name="id_libro">
-                <div class="mb-3">
-                  <label for="mod_data_prestito" class="form-label">Data prestito</label>
-                  <input type="date" class="form-control" id="mod_data_prestito" name="data_prestito">
-                </div>
-                <div class="mb-3">
-                  <label for="mod_data_restituzione" class="form-label">Data restituzione</label>
-                  <input type="date" class="form-control" id="mod_data_restituzione" name="data_restituzione">
-                </div>
-                <div class="mb-3">
-                  <label for="mod_data_restituzione_prevista" class="form-label">Data restituzione prevista</label>
-                  <input type="date" class="form-control" id="mod_data_restituzione_prevista" name="data_restituzione_prevista">
-                </div>
-              </form>
+            <div class="mb-3">
+              <label for="mod_data_restituzione" class="form-label">Data restituzione</label>
+              <input type="date" class="form-control" id="mod_data_restituzione" name="data_restituzione">
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-              <button type="button" class="btn btn-primary" onclick="confermaModificaPrestito()">Salva modifiche</button>
+            <div class="mb-3">
+              <label for="mod_data_restituzione_prevista" class="form-label">Data restituzione prevista</label>
+              <input type="date" class="form-control" id="mod_data_restituzione_prevista"
+                name="data_restituzione_prevista">
             </div>
-          </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+          <button type="button" class="btn btn-primary" onclick="confermaModificaPrestito()">Salva modifiche</button>
         </div>
       </div>
+    </div>
+  </div>
   </div>
 
 
@@ -318,84 +357,85 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <script>
-    
-$(document).ready(function() {
-  $('#prestiti-table').DataTable({
-    language: {
-      url: "//cdn.datatables.net/plug-ins/1.13.7/i18n/it-IT.json"
-    },
-    columnDefs: [
-      {
-        targets: [6, 7, 8], // indici delle colonne date
-        render: function(data) {
-          return `<input type="date" class="form-control" value="${data ? data.split('-').reverse().join('-') : ''}">`;
+
+    $(document).ready(function () {
+      $('#prestiti-table').DataTable({
+        language: {
+          url: "//cdn.datatables.net/plug-ins/1.13.7/i18n/it-IT.json"
+        },
+        columnDefs: [
+          {
+            targets: [6, 7, 8], // indici delle colonne date
+            render: function (data) {
+              return `<input type="date" class="form-control" value="${data ? data.split('-').reverse().join('-') : ''}">`;
+            }
+          },
+          {
+            targets: -1, // ultima colonna
+            render: function () {
+              return '<button class="btn btn-sm btn-success save-row">Salva</button> <button class="btn btn-sm btn-danger delete-row">Elimina</button>';
+            }
+          }
+        ]
+      });
+
+      // Gestione click salva
+      $('#prestiti-table').on('click', '.save-row', function () {
+        const row = $(this).closest('tr');
+        const id = row.find('td:first').text();
+        const id_libro = row.find('td:eq(1)').text();
+
+        const rowData = {
+          id_libro: id_libro,
+          data_prestito: row.find('input').eq(0).val(),
+          data_restituzione: row.find('input').eq(1).val(),
+          data_restituzione_prevista: row.find('input').eq(2).val()
+        };
+
+        $.post(`/gestisci_prestiti/${id}/update`, rowData)
+          .done(() => toastr.success('Prestito aggiornato.'))
+          .fail(() => toastr.error('Errore aggiornamento, compilare tutti i campi.'));
+      });
+
+      // Gestione click elimina
+      $('#prestiti-table').on('click', '.delete-row', function () {
+        const row = $(this).closest('tr');
+        const id = row.find('td:first').text();
+
+        if (confirm('Sei sicuro di voler eliminare questo prestito?')) {
+          $.post(`/gestisci_prestiti/${id}/delete`)
+            .done(function () {
+              toastr.success('Prestito eliminato');
+              row.remove();
+            })
+            .fail(() => toastr.error('Errore eliminazione'));
         }
-      },
-      {
-        targets: -1, // ultima colonna
-        render: function() {
-          return '<button class="btn btn-sm btn-success save-row">Salva</button> <button class="btn btn-sm btn-danger delete-row">Elimina</button>';
-        }
-      }
-    ]
-  });
-
-  // Gestione click salva
-  $('#prestiti-table').on('click', '.save-row', function() {
-  const row = $(this).closest('tr');
-  const id = row.find('td:first').text();
-  const id_libro = row.find('td:eq(1)').text();
-  
-  const rowData = {
-    id_libro: id_libro,
-    data_prestito: row.find('input').eq(0).val(),
-    data_restituzione: row.find('input').eq(1).val(),
-    data_restituzione_prevista: row.find('input').eq(2).val()
-  };
-
-  $.post(`/gestisci_prestiti/${id}/update`, rowData)
-    .done(() => toastr.success('Prestito aggiornato.'))
-    .fail(() => toastr.error('Errore aggiornamento, compilare tutti i campi.'));
-});
-
-  // Gestione click elimina
-  $('#prestiti-table').on('click', '.delete-row', function() {
-    const row = $(this).closest('tr');
-    const id = row.find('td:first').text();
-
-    if (confirm('Sei sicuro di voler eliminare questo prestito?')) {
-      $.post(`/gestisci_prestiti/${id}/delete`)
-        .done(function() {
-          toastr.success('Prestito eliminato');
-          row.remove();
-        })
-        .fail(() => toastr.error('Errore eliminazione'));
-    }
-  });
-});
-//Aggiunta prestito
-$('#prestito-form').submit(function(event) {
-    event.preventDefault(); 
-    $.ajax({
+      });
+    });
+    //Aggiunta prestito
+    $('#prestito-form').submit(function (event) {
+      event.preventDefault();
+      $.ajax({
         type: 'POST',
         url: $(this).attr('action'),
         data: $(this).serialize(),
-        success: function(response) {
+        success: function (response) {
           if (response.msg) {
             toastr.success(response.msg);
-                $('#prestito-form')[0].reset();
-                setTimeout(function() {
-                    location.reload();
-            },1500);
-            } else {
+            $('#prestito-form')[0].reset();
+            setTimeout(function () {
+              location.reload();
+            }, 1500);
+          } else {
             toastr.error(response.msg);
-            }
+          }
         },
-        error: function() {
+        error: function () {
           toastr.error('Errore. Verifica se le date sono corrette o il libro è disponibile.');
         }
+      });
     });
-});
-    </script>
+  </script>
 </body>
+
 </html>

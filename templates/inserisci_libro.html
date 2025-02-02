@@ -1,258 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inserisci Libro</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-        <style>
-            h1 {
-                color: white;
-                text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
-                margin: 20px 0;
-            }
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
+    <style>
+      h1 {
+        color: white;
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+        margin: 20px 0;
+      }
 
-            body {
-                display: flex;
-                justify-content: center; /* Center horizontally */
-                align-items: center;
-                min-height: 100vh; /* Use min-height for better responsiveness */
-                background: linear-gradient(to right, #6a11cb, #2575fc);
-                color: white;
-            }
+      body {
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center;
+        min-height: 100vh; /* Use min-height for better responsiveness */
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        color: white;
+      }
 
-            .container {
-            padding: 40px; /* Added padding */
-        }
+      .container {
+        padding: 40px; /* Added padding */
+      }
 
-        .btn-rounded {
-            border-radius: 15px; 
-            padding: 0.5rem 1rem;
-            background-color: #07af12; 
-        }
-        .card{
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin-top: 60px;
-        }
-            .navbar {
-                width: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                padding: 15px;
-                position: fixed;
-                top: 0;
-                width: 100%;
-                z-index: 1000;
-                display: flex;
-                justify-content: left;
-                align-items: center;
-            }
-            .navbar .btn-back {
-                color: white;
-                font-weight: bold;
-                text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-            }
-            .btn {
-      margin: 10px;
-    }
-    .navbar .btn-catalogo:hover {
-      background-color: #0d9ac9;
-      color: white;
-      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-      
-    }
-    .navbar .btn-utenti:hover {
-      background-color: #066e3c;
-      color: white;
-      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-      
-    }
-    .navbar .btn-prestiti:hover {
-      background-color: #ff8a04;
-      color: white;
-      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-      
-    }
-    .navbar .btn-libro:hover {
-      background-color: #ce9c06eb;
-      color: white;
-      text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-      
-    }
-    .navbar .btn-back {
-            color: white;
-            font-weight: bold;
-            text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-        }
-    .navbar .btn-prestiti {
-            color: white;
-            background-color: #fd7e14;
-            text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-        }       
-    .navbar .btn-libro {
-            background-color: #ffc107eb;
-            border: none;
-            color: white;
-        }
-    .navbar .btn-utenti {
-            background-color: #28a745;
-            border: none;
-            color: white;
-        }
-    .navbar .btn-catalogo {
-            background-color: #007bff;
-            border: none;
-            color: white;
-            
-        }
-    .navbar .btn-back:hover {
-            background-color: #eb0303;
-            color: white;
-            text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
-    }
-            .form-label {
-            margin-bottom: 0.25rem;
-            font-weight: bold;
-            }
-            #toast-container > .toast-success {
-                background-color: #07af12 !important;
-            }
-        </style>
-    </head>
-<body>
+      .btn-rounded {
+        border-radius: 15px;
+        padding: 0.5rem 1rem;
+        background-color: #07af12;
+      }
+      .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-top: 60px;
+      }
+      .navbar {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 15px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+      }
+      .navbar .btn-back {
+        color: white;
+        font-weight: bold;
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+      }
+      .btn {
+        margin: 10px;
+      }
+      .navbar .btn-catalogo:hover {
+        background-color: #0d9ac9;
+        color: white;
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+      }
+      .navbar .btn-utenti:hover {
+        background-color: #066e3c;
+        color: white;
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+      }
+      .navbar .btn-prestiti:hover {
+        background-color: #ff8a04;
+        color: white;
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+      }
+      .navbar .btn-libro:hover {
+        background-color: #ce9c06eb;
+        color: white;
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+      }
+      .navbar .btn-back {
+        color: white;
+        font-weight: bold;
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+      }
+      .navbar .btn-prestiti {
+        color: white;
+        background-color: #fd7e14;
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+      }
+      .navbar .btn-libro {
+        background-color: #ffc107eb;
+        border: none;
+        color: white;
+      }
+      .navbar .btn-utenti {
+        background-color: #28a745;
+        border: none;
+        color: white;
+      }
+      .navbar .btn-catalogo {
+        background-color: #007bff;
+        border: none;
+        color: white;
+      }
+      .navbar .btn-back:hover {
+        background-color: #eb0303;
+        color: white;
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+      }
+      .form-label {
+        margin-bottom: 0.25rem;
+        font-weight: bold;
+      }
+      #toast-container > .toast-success {
+        background-color: #07af12 !important;
+      }
+    </style>
+  </head>
+  <body>
     <div class="navbar">
-        <a href="{{ url_for('dashboard') }}" class="btn btn-danger btn-back">
-            <span class="icon">&#8962;</span> Home
-        </a>
-        <a href="{{ url_for('catalogo') }}" class="btn btn-catalogo">Catalogo</a>
-        <a href="{{ url_for('nuovo_utente') }}" class="btn btn-utenti">Utenti</a>
-        <a href="{{ url_for('inserisci_libro') }}" class="btn btn-libro">Inserisci Libro</a>
-        <a href="{{ url_for('gestisci_prestiti') }}" class="btn btn-prestiti">Prestiti</a>
-
+      <a href="{{ url_for('dashboard') }}" class="btn btn-danger btn-back">
+        <span class="icon">&#8962;</span> Home
+      </a>
+      <a href="{{ url_for('catalogo') }}" class="btn btn-catalogo">Catalogo</a>
+      <a href="{{ url_for('nuovo_utente') }}" class="btn btn-utenti">Utenti</a>
+      <a href="{{ url_for('inserisci_libro') }}" class="btn btn-libro"
+        >Inserisci Libro</a
+      >
+      <a href="{{ url_for('gestisci_prestiti') }}" class="btn btn-prestiti"
+        >Prestiti</a
+      >
     </div>
     <div class="container">
-        <div class="card mx-auto" style="max-width: 500px;">
-            <div class="card-header bg-primary text-white text-center">
-                <h1>Inserisci Libro</h1>
-            </div>
-            <div class="card-body">
-                <form id ="book-form" method="post" action="{{ url_for('inserisci_libro') }}">
-                    <div class="mb-3">
-                        <label for="nome_libro" class="form-label">Titolo</label>
-                        <input type="text" class="form-control" id="nome_libro" name="nome_libro" placeholder="Inserisci il titolo" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="autore" class="form-label">Autore</label>
-                        <input type="text" class="form-control" id="autore" name="autore" placeholder="Inserisci l'autore" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="isbn" class="form-label">ISBN (978-12-34567-89-0)</label>
-                        <input type="text" class="form-control" id="isbn" name="isbn" placeholder="Inserisci l'ISBN" required pattern=".{17,17}" title="L'ISBN deve essere esattamente di 17 caratteri">
-                    </div>
-                    <div class="mb-3">
-                        <label for="genere" class="form-label">Genere</label>
-                        <input type="text" class="form-control" id="genere" name="genere" placeholder="Inserisci il genere" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editore" class="form-label">Editore</label>
-                        <input type="text" class="form-control" id="editore" name="editore" placeholder="Inserisci l'editore" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="anno_pubblicazione" class="form-label">Anno di Pubblicazione</label>
-                        <input type="number" class="form-control" id="anno_pubblicazione" name="anno_pubblicazione" placeholder="Inserisci l'anno" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="posizione" class="form-label">Posizione</label>
-                        <input type="text" class="form-control" id="posizione" name="posizione" placeholder="Inserisci la posizione" required>
-                    </div>
-                    <div class="d-grid gap-2"> <button type="submit" class="btn btn-primary btn-rounded">Inserisci</button></div>
-                </form>
-            </div>
+      <div class="card mx-auto" style="max-width: 500px">
+        <div class="card-header bg-primary text-white text-center">
+          <h1>Inserisci Libro</h1>
         </div>
+        <div class="card-body">
+          <form
+            id="book-form"
+            method="post"
+            action="{{ url_for('inserisci_libro') }}"
+          >
+            <div class="mb-3">
+              <label for="nome_libro" class="form-label">Titolo</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nome_libro"
+                name="nome_libro"
+                placeholder="Inserisci il titolo"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="autore" class="form-label">Autore</label>
+              <input
+                type="text"
+                class="form-control"
+                id="autore"
+                name="autore"
+                placeholder="Inserisci l'autore"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="isbn" class="form-label"
+                >ISBN (978-12-34567-89-0)</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="isbn"
+                name="isbn"
+                placeholder="Inserisci l'ISBN"
+                required
+                pattern=".{17,17}"
+                title="L'ISBN deve essere esattamente di 17 caratteri"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="genere" class="form-label">Genere</label>
+              <input
+                type="text"
+                class="form-control"
+                id="genere"
+                name="genere"
+                placeholder="Inserisci il genere"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="editore" class="form-label">Editore</label>
+              <input
+                type="text"
+                class="form-control"
+                id="editore"
+                name="editore"
+                placeholder="Inserisci l'editore"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="anno_pubblicazione" class="form-label"
+                >Anno di Pubblicazione</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="anno_pubblicazione"
+                name="anno_pubblicazione"
+                placeholder="Inserisci l'anno"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="posizione" class="form-label">Posizione</label>
+              <input
+                type="text"
+                class="form-control"
+                id="posizione"
+                name="posizione"
+                placeholder="Inserisci la posizione"
+                required
+              />
+            </div>
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-rounded">
+                Inserisci
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
-    //Inizializzazione Toastr
-    toastr.options = {
-      "closeButton": true,
-      "positionClass": "toast-top-right",
-      "progressBar": true,
-      "timeOut": 3000,
-      "extendedTimeOut": 1000
-    };
+      //Inizializzazione Toastr
+      toastr.options = {
+        closeButton: true,
+        positionClass: "toast-top-right",
+        progressBar: true,
+        timeOut: 3000,
+        extendedTimeOut: 1000,
+      };
 
-    const rowsPerPage = 10;
-    let currentPage = 1;
+      const rowsPerPage = 10;
+      let currentPage = 1;
 
-    function renderTable() {
-      const rows = document.querySelectorAll('#userTable tr');
-      const totalPages = Math.ceil(rows.length / rowsPerPage);
+      function renderTable() {
+        const rows = document.querySelectorAll("#userTable tr");
+        const totalPages = Math.ceil(rows.length / rowsPerPage);
 
-      rows.forEach((row, index) => {
-        row.style.display = (index >= (currentPage - 1) * rowsPerPage && index < currentPage * rowsPerPage) ? '' : 'none';
-      });
-
-      renderPagination(totalPages);
-    }
-
-    function renderPagination(totalPages) {
-      const pagination = document.getElementById('pagination');
-      pagination.innerHTML = '';
-
-      for (let i = 1; i <= totalPages; i++) {
-        const pageButton = document.createElement('button');
-        pageButton.textContent = i;
-        pageButton.className = `btn btn-sm ${i === currentPage ? 'btn-primary' : 'btn-secondary'} mx-1`;
-        pageButton.addEventListener('click', () => {
-          currentPage = i;
-          renderTable();
+        rows.forEach((row, index) => {
+          row.style.display =
+            index >= (currentPage - 1) * rowsPerPage &&
+            index < currentPage * rowsPerPage
+              ? ""
+              : "none";
         });
-        pagination.appendChild(pageButton);
+
+        renderPagination(totalPages);
       }
-    }
 
-    function sortTable(columnIndex) {
-      const table = document.querySelector('.table');
-      const rows = Array.from(table.tBodies[0].rows);
-      const isAscending = table.getAttribute('data-sort-order') === 'asc';
+      function renderPagination(totalPages) {
+        const pagination = document.getElementById("pagination");
+        pagination.innerHTML = "";
 
-      rows.sort((a, b) => {
-        const cellA = a.cells[columnIndex].textContent.trim();
-        const cellB = b.cells[columnIndex].textContent.trim();
-        return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
-      });
+        for (let i = 1; i <= totalPages; i++) {
+          const pageButton = document.createElement("button");
+          pageButton.textContent = i;
+          pageButton.className = `btn btn-sm ${
+            i === currentPage ? "btn-primary" : "btn-secondary"
+          } mx-1`;
+          pageButton.addEventListener("click", () => {
+            currentPage = i;
+            renderTable();
+          });
+          pagination.appendChild(pageButton);
+        }
+      }
 
-      table.tBodies[0].append(...rows);
-      table.setAttribute('data-sort-order', isAscending ? 'desc' : 'asc');
+      function sortTable(columnIndex) {
+        const table = document.querySelector(".table");
+        const rows = Array.from(table.tBodies[0].rows);
+        const isAscending = table.getAttribute("data-sort-order") === "asc";
 
-      renderTable();
-    }
-
-    // Gestire la risposta AJAX e mostrare il Toastr
-    $(document).ready(function() {
-        $('#book-form').submit(function(event) {
-            event.preventDefault(); // Impedisce l'invio standard del form
-
-            $.ajax({
-                type: 'POST',  // Metodo di richiesta
-                url: $(this).attr('action'),
-                data: $(this).serialize(),  // Serializza i dati del form per l'invio
-                success: function(response) {  // Funzione eseguita in caso di successo
-                    if (response.msg === "Libro aggiunto con successo") {  // Controlla il messaggio di successo
-                        toastr.success(response.msg);  // Mostra un messaggio di successo con Toastr
-                    }
-                    else {  // Se il messaggio non è quello di successo, significa che c'è stato un errore
-                        toastr.error(response.msg);  // Mostra un messaggio di errore con Toastr
-                    }
-                },
-                error: function(xhr, status, error) {  // Funzione eseguita in caso di errore AJAX
-                    toastr.error("Errore durante l'inserimento del libro.");  // Mostra un messaggio di errore generico
-                }
-            });
+        rows.sort((a, b) => {
+          const cellA = a.cells[columnIndex].textContent.trim();
+          const cellB = b.cells[columnIndex].textContent.trim();
+          return isAscending
+            ? cellA.localeCompare(cellB)
+            : cellB.localeCompare(cellA);
         });
-    });
+
+        table.tBodies[0].append(...rows);
+        table.setAttribute("data-sort-order", isAscending ? "desc" : "asc");
+
+        renderTable();
+      }
+
+      // Gestire la risposta AJAX e mostrare il Toastr
+      $(document).ready(function () {
+        $("#book-form").submit(function (event) {
+          event.preventDefault(); // Impedisce l'invio standard del form
+
+          $.ajax({
+            type: "POST", // Metodo di richiesta
+            url: $(this).attr("action"),
+            data: $(this).serialize(), // Serializza i dati del form per l'invio
+            success: function (response) {
+              // Funzione eseguita in caso di successo
+              if (response.msg === "Libro aggiunto con successo") {
+                // Controlla il messaggio di successo
+                toastr.success(response.msg); // Mostra un messaggio di successo con Toastr
+              } else {
+                // Se il messaggio non è quello di successo, significa che c'è stato un errore
+                toastr.error(response.msg); // Mostra un messaggio di errore con Toastr
+              }
+            },
+            error: function (xhr, status, error) {
+              // Funzione eseguita in caso di errore AJAX
+              toastr.error("Errore durante l'inserimento del libro."); // Mostra un messaggio di errore generico
+            },
+          });
+        });
+      });
     </script>
-</body>
+  </body>
 </html>

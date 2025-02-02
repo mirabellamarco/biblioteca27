@@ -1,119 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestione Biblioteca</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
-        h1 {
-            color: white;
-            text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
-            font-size: 70px;
-        }
-        .navbar {
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-        .navbar .btn {
-            background-color: #cc0000;
-            border: none;
-            margin-right: 10px;
-            width: 10%;
-            font-size: 15px;
-            font-weight: bold;
-        }
-        .navbar .btn:hover {
-            background-color: white;
-            color: #cc0000 ;
-            font-weight: bold;
-            transition: all 0.5s ease;
-        }
-        .container {
-            text-align: center;
-            margin-top: 150px;
-        }
-        .btn {
-            margin: 15px auto;
-            width: 100%;
-            max-width: 300px;
-            font-size: 30px;
-            padding: 15px;
-            border-radius: 10px;
-        }
-        .btn-primary {
-            background-color: #007bff
-            ;
-            border: none;
-        }
-        .btn-primary:hover {
-            background-color: rgb(42, 130, 225);
-        }
-        .btn-warning {
-            background-color: #ffc107;
-            border: none;
-            color: white;
-        }
-        .btn-warning:hover {
-            background-color: #e0a800;
-            color: white;
-        }
-        .btn-success {
-            background-color: #28a745;
-            border: none;
-            color: white;
-        }
-        .btn-success:hover {
-            background-color: #218838;
-        }
-        .btn-info {
-            background-color: #fd7e14;
-            color: white;
-            border: none;
-        }
-        .btn-info:hover {
-            background-color: #9d4a07;
-            color: white;
-        }
+      body {
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+      }
+      h1 {
+        color: white;
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+        font-size: 70px;
+      }
+      .navbar {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+      }
+      .navbar .btn {
+        background-color: #cc0000;
+        border: none;
+        margin-right: 10px;
+        width: 10%;
+        font-size: 15px;
+        font-weight: bold;
+      }
+      .navbar .btn:hover {
+        background-color: white;
+        color: #cc0000;
+        font-weight: bold;
+        transition: all 0.5s ease;
+      }
+      .container {
+        text-align: center;
+        margin-top: 150px;
+      }
+      .btn {
+        margin: 15px auto;
+        width: 100%;
+        max-width: 300px;
+        font-size: 30px;
+        padding: 15px;
+        border-radius: 10px;
+      }
+      .btn-primary {
+        background-color: #007bff;
+        border: none;
+      }
+      .btn-primary:hover {
+        background-color: rgb(42, 130, 225);
+      }
+      .btn-warning {
+        background-color: #ffc107;
+        border: none;
+        color: white;
+      }
+      .btn-warning:hover {
+        background-color: #e0a800;
+        color: white;
+      }
+      .btn-success {
+        background-color: #28a745;
+        border: none;
+        color: white;
+      }
+      .btn-success:hover {
+        background-color: #218838;
+      }
+      .btn-info {
+        background-color: #fd7e14;
+        color: white;
+        border: none;
+      }
+      .btn-info:hover {
+        background-color: #9d4a07;
+        color: white;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <nav class="navbar">
-        <a href="{{ url_for('logout') }}" class="btn btn-danger ">Logout</a>
+      <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
     </nav>
     <div class="container">
-        <h1 class="mb-3">Gestione Biblioteca</h1>
-        <div class="row">
-            <div class="col-md-12 mb-3">
-                <a href="{{ url_for('catalogo') }}" class="btn btn-primary">Visualizza Catalogo</a>
-            </div>
-            <div class="col-md-12 mb-3">
-                <a href="{{ url_for('inserisci_libro') }}" class="btn btn-warning">Inserisci nuovo libro</a>
-            </div>
-            <div class="col-md-12 mb-3">
-                <a href="{{ url_for('nuovo_utente') }}" class="btn btn-success">Gestione Utenti</a>
-            </div>
-            <div class="col-md-12">
-                <a href="{{ url_for('gestisci_prestiti') }}" class="btn btn-info">Gestione Prestiti</a>
-            </div>
+      <h1 class="mb-3">Gestione Biblioteca</h1>
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <a href="{{ url_for('catalogo') }}" class="btn btn-primary"
+            >Visualizza Catalogo</a
+          >
         </div>
+        <div class="col-md-12 mb-3">
+          <a href="{{ url_for('inserisci_libro') }}" class="btn btn-warning"
+            >Inserisci nuovo libro</a
+          >
+        </div>
+        <div class="col-md-12 mb-3">
+          <a href="{{ url_for('nuovo_utente') }}" class="btn btn-success"
+            >Gestione Utenti</a
+          >
+        </div>
+        <div class="col-md-12">
+          <a href="{{ url_for('gestisci_prestiti') }}" class="btn btn-info"
+            >Gestione Prestiti</a
+          >
+        </div>
+      </div>
     </div>
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>

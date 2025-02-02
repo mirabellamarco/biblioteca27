@@ -5,89 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Errore</title>
     <style>
-      /* Contenitore delle GIF */
-      .gif-container {
-        display: flex; /* Usa flexbox per disporre le GIF orizzontalmente */
-        flex-wrap: wrap; /* Le GIF andranno a capo se lo spazio è insufficiente */
-        gap: 10px; /* Spazio tra le GIF */
-        justify-content: left; /* Centra le GIF */
-      }
-      /* Stile per ogni GIF */
-      .gif-container iframe {
-        flex-shrink: 0; /* Impedisce il ridimensionamento delle GIF */
-        width: 150px;
-        height: 150px;
-      }
+        /* Contenitore delle GIF */
+        .gif-container {
+            display: flex; /* Usa flexbox per disporre le GIF orizzontalmente */
+            flex-wrap: wrap; /* Le GIF andranno a capo se lo spazio è insufficiente */
+            gap: 10px; /* Spazio tra le GIF */
+            justify-content: center; /* Centra le GIF */
+        }
+        /* Stile per ogni GIF */
+        .gif-container iframe {
+            flex-shrink: 0; /* Impedisce il ridimensionamento delle GIF */
+            width: 400px;
+            height: 400px;
+            
+        }
+        body { font-size: xx-large;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
     </style>
   </head>
   <body>
     {% if errore == 404 %}
-    <h1>Errore 404</h1>
-    <p>Nessun risultato trovato :c</p>
-    <!-- Contenitore delle GIF -->
-    <div class="gif-container">
-      <iframe
-        src="https://giphy.com/embed/UHAYP0FxJOmFBuOiC2"
-        width="480"
-        height="360"
-        style=""
-        frameborder="0"
-        class="giphy-embed"
-        allowfullscreen
-      ></iframe>
-      <p>
-        <a
-          href="https://giphy.com/gifs/gengar-jijidraws-jiji-knight-UHAYP0FxJOmFBuOiC2"
-        ></a>
-      </p>
-    </div>
-    <a href="/" title="нет проблема">
-      Go login to нет проблема, hic sunt leones 🏜️</a
-    >
+        <h1>Errore 404</h1>
+        <p>Nessun risultato trovato :c</p>
+        <!-- Contenitore delle GIF -->
+        <div class="gif-container">
+            <iframe src="https://giphy.com/embed/UHAYP0FxJOmFBuOiC2" width="480" height="360" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/gengar-jijidraws-jiji-knight-UHAYP0FxJOmFBuOiC2"></a></p>
+        </div>
+        <a href="/" title="No problem"> Torna indietro, hic sunt leones 🏜️</a>
     {% elif errore == 1 %}
-    <h1>Errore parametro mancante</h1>
-    <p>Devi specificare cosa cercare sciocchino</p>
-    <div class="gif-container">
-      <iframe
-        src="https://giphy.com/embed/tU2mV8ALzJEdXAAwRo"
-        width="480"
-        height="355"
-        style=""
-        frameborder="0"
-        class="giphy-embed"
-        allowfullscreen
-      ></iframe>
-      <p>
-        <a
-          href="https://giphy.com/gifs/nanalan-season-1-mona-munk-love-tU2mV8ALzJEdXAAwRo"
-        ></a>
-      </p>
-    </div>
-    <a href="/" title="нет проблема">
-      Go login to нет проблема e cerca qualcosa 🔎</a
-    >
+        <h1>Errore parametro mancante</h1>
+        <p>Devi specificare cosa cercare sciocchino</p>
+        <div class="gif-container">
+            <iframe src="https://giphy.com/embed/tU2mV8ALzJEdXAAwRo" width="480" height="355" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/nanalan-season-1-mona-munk-love-tU2mV8ALzJEdXAAwRo"></a></p>
+        </div>
+        <a href="/" title="No problem"> Torna indietro e cerca qualcosa 🔎</a>
     {% elif errore == 500 %}
-    <h1>Errore del database</h1>
-    <p>There is nothing we can do, much проблема</p>
-    <div class="gif-container">
-      <img
-        src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Foriginal%2F002%2F665%2F991%2F104.jpg&f=1&nofb=1&ipt=e6ce250a08b8a8287e016efd76cd9956b7f5a1051ecebdb5afc23d7e658697f4&ipo=images"
-      />
-    </div>
-    <a href="/" title="нет проблема">
-      Go login to нет проблема e fai debug 🐛</a
-    >
-
+        <h1>Errore del database</h1>
+        <p>Il database non risponde</p>
+        <div class="gif-container">
+            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Foriginal%2F002%2F665%2F991%2F104.jpg&f=1&nofb=1&ipt=e6ce250a08b8a8287e016efd76cd9956b7f5a1051ecebdb5afc23d7e658697f4&ipo=images">
+        </div>
+        <a href="/" title="No problem"> Chiedi supporto tecnico 🐛</a>
+    
     {% elif errore == 401 %}
-    <h1>⛔ Проблема ⛔</h1>
-    <p>Utente non autorizzato!</p>
-    <div class="gif-container">
-      <img
-        src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fih0.redbubble.net%2Fimage.507199006.7519%2Fflat%2C750x%2C075%2Cf-pad%2C750x1000%2Cf8f8f8.u1.jpg&f=1&nofb=1&ipt=d7ad6a00b8077d326ec372f2ca2f54c12f866b6d8bba22a5d6ab92bd2400971c&ipo=images"
-        style="width: 300px; height: auto"
-      />
-    </div>
-    <a href="/" title="нет проблема">нет проблема, vado a loggarmi 👀</a>
-    {% endif %}
-  </body>
+        <h1>⛔ ERRORE ⛔ </h1>
+        <p>Utente non autorizzato!</p>
+        <div class="gif-container">
+            <img src="static/img/noaccess.gif"style="width: 300px; height: auto;">
+        </div>
+        <a href="/" title="No problem"> Per favore effettua il login 👀</a>
+    {% endif %}  
+
+
+</body>
 </html>

@@ -4,9 +4,6 @@ from email.mime.multipart import MIMEMultipart
 import db
 import time
 
-# EMAIL DI TEST
-# email = "biblioteca27@virgilio.it"
-
 
 def controllo_db():
     try:
@@ -162,7 +159,6 @@ def invia_reminder(final_dict, chiave):
     messaggio = MIMEMultipart()
     messaggio["From"] = username
     messaggio["To"] = destinatario
-    messaggio["Bcc"] = "biblioteca27@virgilio.it"
     messaggio["Subject"] = f"Promemoria scadenza prestito"
 
     # Corpo dell'email
@@ -205,7 +201,7 @@ def invia_expiring(final_dict_expiring, chiave):
     messaggio = MIMEMultipart()
     messaggio["From"] = username
     messaggio["To"] = destinatarioexpiring
-    messaggio["Bcc"] = "biblioteca27@virgilio.it"
+    
     messaggio["Subject"] = f"Scadenza prestito libro imminente"
 
     # Corpo dell'email
@@ -242,7 +238,7 @@ def invia_expired(final_dict_expired, chiave):
     messaggio = MIMEMultipart()
     messaggio["From"] = username
     messaggio["To"] = destinatarioexpired
-    messaggio["Bcc"] = "biblioteca27@virgilio.it"
+    
     messaggio["Subject"] = f"Prestito libro scaduto"
 
     # Corpo dell'email

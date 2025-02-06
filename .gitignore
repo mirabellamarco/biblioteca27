@@ -1,6 +1,6 @@
 .venv
-_pycache_
-venv
-logs
+_pycache_/
+venv/
+logs/
 .hintrc
 .env

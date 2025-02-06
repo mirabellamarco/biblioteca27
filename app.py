@@ -304,6 +304,7 @@ def inserisci_libro():
         editore = request.form["editore"]
         anno_pubblicazione = request.form["anno_pubblicazione"]
         posizione = request.form["posizione"]
+        id_copia = request.form["id_copia"]
 
         # Connetti al database
         conn, cursor = db.connection_establish()
@@ -313,8 +314,8 @@ def inserisci_libro():
         try:
             # Inserisci il libro nella tabella catalogo
             query = """
-                INSERT INTO catalogo (nome_libro, autore, isbn, genere, editore, anno_pubblicazione, posizione)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                INSERT INTO catalogo (nome_libro, autore, isbn, genere, editore, anno_pubblicazione, posizione, id_copia)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
             """
             cursor.execute(
                 query,
@@ -326,6 +327,7 @@ def inserisci_libro():
                     editore,
                     anno_pubblicazione,
                     posizione,
+                    id_copia,
                 ),
             )
             conn.commit()
@@ -361,7 +363,7 @@ def gestisci_prestiti():
     if request.method == "POST":
         # Ottieni i dati dal form
         email_utente = request.form["email"].strip()
-        isbn = request.form["isbn"].strip()
+        id_libro = request.form["id_libro"].strip()
         data_prestito = request.form["data_prestito"]
         data_restituzione = request.form.get("data_restituzione", None)
         data_restituzione_prevista = request.form["data_restituzione_prevista"]
@@ -392,9 +394,9 @@ def gestisci_prestiti():
                 return jsonify({"success": False, "msg": "Utente non trovato"}), 400
             id_utente = utente[0]
 
-            # Recupero id_libro dall'ISBN
+            # Recupero disponibilità libro
             cursor.execute(
-                "SELECT id, disponibile FROM catalogo WHERE isbn = %s", (isbn,)
+                "SELECT id, disponibile FROM catalogo WHERE id = %s", (id_libro,)
             )
             libro = cursor.fetchone()
             if not libro:
@@ -661,6 +663,7 @@ def catalogo():
                 c.editore, 
                 c.anno_pubblicazione,
                 c.posizione,
+                c.id_copia,
                 CASE
                     WHEN EXISTS (
                         SELECT 1
@@ -688,7 +691,8 @@ def catalogo():
                 "editore": book[5],
                 "anno_pubblicazione": book[6],
                 "posizione": book[7],
-                "disponibilita": book[8],  # Disponibilità calcolata dalla query
+                "id_copia": book[8],
+                "disponibilita": book[9],  # Disponibilità calcolata dalla query
             }
             books_list.append(book_dict)
 
@@ -729,6 +733,7 @@ def modifica_libro(id):
         editore = request.form["editore"]
         anno_pubblicazione = request.form["anno_pubblicazione"]
         posizione = request.form["posizione"]
+        id_copia = request.form["id_copia"]
 
         # Aggiorna il libro con l'ID specificato
         cursor.execute(
@@ -740,7 +745,8 @@ def modifica_libro(id):
                 genere = %s,
                 editore = %s,
                 anno_pubblicazione = %s,
-                posizione = %s
+                posizione = %s,
+                id_copia = %s
             WHERE id = %s
         """,
             (
@@ -751,6 +757,7 @@ def modifica_libro(id):
                 editore,
                 anno_pubblicazione,
                 posizione,
+                id_copia,
                 id,
             ),
         )

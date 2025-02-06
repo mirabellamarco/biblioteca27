@@ -40,7 +40,7 @@ def connection_close(connection, cursor):
 # endregion
 
 
-# region MK.DATABASE
+# region CREATE
 def first_connection():
     """
     Funzione per stabilire la prima connessione a MariaDB.
@@ -82,11 +82,12 @@ def create_table_catalogo():
             id BIGINT PRIMARY KEY AUTO_INCREMENT,
             nome_libro VARCHAR(255) NOT NULL,
             autore VARCHAR(255) NOT NULL,
-            isbn VARCHAR(17)NOT NULL UNIQUE,
+            isbn VARCHAR(17)NOT NULL,
             genere VARCHAR(100),
             editore VARCHAR(255),
             anno_pubblicazione SMALLINT(4),
             posizione VARCHAR(50),
+            id_copia SMALLINT NOT NULL DEFAULT 1,
             disponibile TINYINT(1) DEFAULT 1
         );
         """
@@ -357,18 +358,18 @@ def inserisci_esempi():
     try:
         connection, cursor = connection_establish()
         insert_or_update_query = """
-INSERT INTO catalogo (nome_libro, autore, isbn, genere, editore, anno_pubblicazione, posizione)
+INSERT INTO catalogo (nome_libro, autore, isbn, genere, editore, anno_pubblicazione, posizione, id_copia, disponibile)
 VALUES
-('Le Avventure di ChatGPT', 'OpenAI Author', '978-12-34567-01-1', 'Fantascienza', 'AI Books Publishing', 2023, 'Scaffale A1'),
-('COBOL per Tutti', 'Guido Van Cossum', '978-12-34567-03-3', 'Programmazione', 'TechPress', 2020, 'Scaffale C2'),
-('Il Signore degli Stack', 'Tolkien Developer', '978-12-34567-04-4', 'Fantasia', 'Middle Earth Pub', 1954, 'Scaffale D1'),
-('Ricette con Pennette', 'Isaac Modder', '978-12-34567-06-6', 'Cucina', 'ModKitchen Books', 2024, 'Scaffale A2'),
-('Il Signore del Broadcast', 'J.V.V. Tolkien', '978-12-34567-07-7', 'Narrativa', 'Mondadori', 1990, 'Scaffale A2'),
-('Barry Otter e la Pietra Segreta', 'K.J.Bowling', '978-12-34567-09-9', 'Fantasia', 'Azkaban', 2000, 'Scaffale 9 3/4'),
-('2001, Odissea nello Sbazio', 'Gnagrn Gnarl', '978-12-34567-11-1', 'Fantascienza', 'GiGi Editore', 2001, 'Scaffale A3'),
-('Orgoglio e Pregipython', 'Bane Austin', '978-12-34567-11-2', 'Narrativa', 'Denzel Books', 1968, 'Scaffale 7'),
-('Cento anni di Solitude (Skyrim Collection)', 'Elisabetta Piancavallo', '978-12-34567-11-3', 'Romanzo', 'Balcanican', 2005, 'Scaffale 1'),
-('La ragazza della motrice','Siderea Beers','978-12-34567-11-4','Narrativa','FCE',2016,'Scaffale XXIII');
+('Le Avventure di ChatGPT', 'OpenAI Author', '978-12-34567-01-1', 'Fantascienza', 'AI Books Publishing', 2023, 'Scaffale A1', 1, 1),
+('COBOL per Tutti', 'Guido Van Cossum', '978-12-34567-03-3', 'Programmazione', 'TechPress', 2020, 'Scaffale C2', 1, 1),
+('Il Signore degli Stack', 'Tolkien Developer', '978-12-34567-04-4', 'Fantasia', 'Middle Earth Pub', 1954, 'Scaffale D1', 1, 1),
+('Ricette con Pennette', 'Isaac Modder', '978-12-34567-06-6', 'Cucina', 'ModKitchen Books', 2024, 'Scaffale A2', 1, 1),
+('Il Signore del Broadcast', 'J.V.V. Tolkien', '978-12-34567-07-7', 'Narrativa', 'Mondadori', 1990, 'Scaffale A2', 1, 1),
+('Barry Otter e la Pietra Segreta', 'K.J.Bowling', '978-12-34567-09-9', 'Fantasia', 'Azkaban', 2000, 'Scaffale 9 3/4', 1, 1),
+('2001, Odissea nello Sbazio', 'Gnagrn Gnarl', '978-12-34567-11-1', 'Fantascienza', 'GiGi Editore', 2001, 'Scaffale A3', 1, 1),
+('Orgoglio e Pregipython', 'Bane Austin', '978-12-34567-11-2', 'Narrativa', 'Denzel Books', 1968, 'Scaffale 7', 1, 1),
+('Cento anni di Solitude (Skyrim Collection)', 'Elisabetta Piancavallo', '978-12-34567-11-3', 'Romanzo', 'Balcanican', 2005, 'Scaffale 1', 1, 1),
+('La ragazza della motrice', 'Siderea Beers', '978-12-34567-11-4', 'Narrativa', 'FCE', 2016, 'Scaffale XXIII', 1, 1);
 """
         cursor.execute(insert_or_update_query)
         connection.commit()
@@ -397,7 +398,6 @@ VALUES
 ('MRZNDR85G78E432W', 0, 'password', 'Andrea Marzi', 'andrea.marzi@example.com', 3310001111),
 ('RSSFNC72L01F204U', 0, 'password', 'Francesca Russo', 'francesca.russo@example.com', 3346667777),
 ('STTMRC76M12A980S', 0, 'password', 'Marco Storti', 'marco.storti@example.com', 3495556666),
-('FLRSPN74N23H567V', 0, 'password', 'Floriana Spanu', 'floriana.spanu@stevejobs.academy', 987654331),
 ('PRTRSS88H89C765V', 0, 'password', 'Sara Patrizi', 'sara.patrizi@example.com', 3462223333),
 ('MRCMRC75M12A885S', 0, 'password', 'Marco Mirabella', 'mmirabella@stevejobs.academy', 123456789);
 

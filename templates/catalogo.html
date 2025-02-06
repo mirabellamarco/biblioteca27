@@ -133,7 +133,8 @@
             <th onclick="sortTable(5)">Editore &#8597;</th>
             <th onclick="sortTable(6)">Anno &#8597;</th>
             <th onclick="sortTable(7)">Posizione &#8597;</th>
-            <th onclick="sortTable(8)">Disponibilità &#8597;</th>
+            <th onclick ="sortTable(8)">ID Copia &#8597;</th>
+            <th onclick="sortTable(9)">Disponibilità &#8597;</th>
             <th>Azioni</th>
           </tr>
         </thead>
@@ -148,12 +149,13 @@
             <td>{{ book.editore }}</td>
             <td>{{ book.anno_pubblicazione }}</td>
             <td>{{ book.posizione }}</td>
+            <td>{{ book.id_copia }}</td>
             <td>{{ book.disponibilita }}</td>
             <td>
               <button
                 type="button"
                 class="btn btn-sm btn-warning"
-                onclick="apriFinestraModificaLibro('{{ book.id_libro }}', '{{ book.nome_libro }}', '{{ book.autore }}', '{{ book.isbn }}', '{{ book.genere }}', '{{ book.editore }}', '{{ book.anno_pubblicazione }}', '{{ book.posizione }}', '{{ book.disponibilita }}')"
+                onclick="apriFinestraModificaLibro('{{ book.id_libro }}', '{{ book.nome_libro }}', '{{ book.autore }}', '{{ book.isbn }}', '{{ book.genere }}', '{{ book.editore }}', '{{ book.anno_pubblicazione }}', '{{ book.posizione }}', '{{ book.id_copia }}','{{ book.disponibilita }}')"
               >
                 Modifica
               </button>
@@ -259,6 +261,15 @@
                   class="form-control"
                   id="mod_posizione"
                   name="posizione"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="mod_id_copia" class="form-label">Id Copia</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="mod_id_copia"
+                  name="id_copia"
                 />
               </div>
             </form>
@@ -382,7 +393,9 @@
         genere,
         editore,
         anno_pubblicazione,
-        posizione
+        posizione,
+        id_copia
+
       ) {
         const form = document.getElementById("formModificaLibro");
         form.action = `/modifica_libro/${id}`; // Imposta l'action del form
@@ -393,9 +406,9 @@
         document.getElementById("mod_isbn").value = isbn;
         document.getElementById("mod_genere").value = genere;
         document.getElementById("mod_editore").value = editore;
-        document.getElementById("mod_anno_pubblicazione").value =
-          anno_pubblicazione;
+        document.getElementById("mod_anno_pubblicazione").value = anno_pubblicazione;
         document.getElementById("mod_posizione").value = posizione;
+        document.getElementById("mod_id_copia").value = id_copia;
 
         bootstrap.Modal.getOrCreateInstance(
           document.getElementById("modificaLibroModal")

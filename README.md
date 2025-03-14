@@ -1,3 +1,7 @@
+Sviluppato con Gabriele Musmeci, tra momenti di pura ispirazione e altri di completo sconforto. But hey, it works!(https://github.com/gabrielemusmecidev)
+
+
+
 SETUP:
 
 Creare un file .env nella main directory con i seguenti parametri:
